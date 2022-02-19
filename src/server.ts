@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import App from './app';
 
 (async () => {
-  // const app = build({ logger: true });
   const app = new App({ logger: true }).app;
   try {
     await app.listen(3000, '0.0.0.0');

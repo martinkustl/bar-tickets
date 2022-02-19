@@ -1,27 +1,16 @@
-import { HttpError } from './../common/errors/http-error';
-import {
-  FastifyPluginAsync,
-  FastifyInstance,
-  FastifyLoggerInstance,
-} from 'fastify';
-import { IncomingMessage, Server, ServerResponse } from 'http';
+import { FastifyPluginAsync } from 'fastify';
 import { injectable } from 'inversify';
+import * as yup from 'yup';
 
-// const itemRoutes: FastifyPluginAsync = async (fastify) => {
-//   fastify.get('/', async (req, reply) => {
-//     return reply.code(200).send('Hello world from Items!');
-//   });
-// };
+const getItemSchema = {
+  params: yup.object().shape({ id: yup.number().required() }),
+};
 
-// export default itemRoutes;
-
-// interface Test {
-//     initRoutes: FastifyPluginAsync
-// }
 @injectable()
 class ItemRoutes {
   public init: FastifyPluginAsync = async (fastify, opts) => {
     this.getItems(fastify, opts);
+    this.getItem(fastify, opts);
   };
 
   private getItems: FastifyPluginAsync = async (fastify) => {
@@ -30,27 +19,17 @@ class ItemRoutes {
     });
   };
 
-  //   public async initRoutes(
-  //     fastify: FastifyInstance<
-  //       Server,
-  //       IncomingMessage,
-  //       ServerResponse,
-  //       FastifyLoggerInstance
-  //     >
-  //   ) {
-  //     fastify.get('/', async (req, reply) => {
-  //       return reply.code(200).send('Hello world from Items!');
-  //     });
-  //   }
+  private getItem: FastifyPluginAsync = async (fastify) => {
+    fastify.get(
+      '/:id',
+      {
+        schema: getItemSchema,
+      },
+      async (req, reply) => {
+        return reply.code(200).send('Hello world from one item!');
+      }
+    );
+  };
 }
 
 export default ItemRoutes;
-
-// import { injectable } from 'inversify';
-
-// @injectable()
-// export class ItemService {
-//   public getAll() {
-//     return 'gets all items';
-//   }
-// }
