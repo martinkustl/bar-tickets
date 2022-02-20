@@ -26,6 +26,8 @@ class App {
     this.registerRoutes();
   }
 
+  // TODO - add auth via fastify-jwt. See: https://www.npmjs.com/package/fastify-jwt
+
   private setErrorHandler() {
     this.app.setErrorHandler((err, req, reply) => {
       req.log.error(err);

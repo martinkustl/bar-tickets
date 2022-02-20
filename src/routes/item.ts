@@ -42,7 +42,7 @@ class ItemRoutes {
   };
 
   private getItems: FastifyPluginAsync = async (fastify) => {
-    fastify.get('/', async (req, reply) => {
+    fastify.get('/', async (_, reply) => {
       const items = await this._itemService.getAll(fastify);
       return reply.code(200).send(items);
     });
