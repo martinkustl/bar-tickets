@@ -54,4 +54,14 @@ export class ItemService {
       },
     });
   }
+
+  public async deleteItem(fastify: FastifyInstance, id: number) {
+    await this.getItem(fastify, id);
+
+    return await fastify.prisma.item.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

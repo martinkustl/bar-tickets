@@ -20,6 +20,12 @@ const patchItemSchema = {
   }),
 };
 
+const deleteItemSchema = {
+  params: yup.object().shape({
+    id: yup.number().required(),
+  }),
+};
+
 @injectable()
 class ItemRoutes {
   private _itemService: ItemService;
@@ -32,6 +38,7 @@ class ItemRoutes {
     this.getItems(fastify, opts);
     this.getItem(fastify, opts);
     this.patchItem(fastify, opts);
+    this.deleteItem(fastify, opts);
   };
 
   private getItems: FastifyPluginAsync = async (fastify) => {
@@ -63,6 +70,14 @@ class ItemRoutes {
         ...(req.body as any),
       });
       return reply.code(200).send(updatedItem);
+    });
+  };
+
+  private deleteItem: FastifyPluginAsync = async (fastify) => {
+    fastify.delete('/:id', { schema: deleteItemSchema }, async (req, reply) => {
+      const { id } = req.params as { id: number };
+      const deletedItem = await this._itemService.deleteItem(fastify, id);
+      return reply.code(200).send(deletedItem);
     });
   };
 }
