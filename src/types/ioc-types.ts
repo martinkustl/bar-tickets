@@ -1,6 +1,8 @@
 const TYPES = {
-  ItemService: Symbol('ItemService'),
-  ItemRoutes: Symbol('ItemRoutes'),
+  ItemService: Symbol.for('ItemService'),
+  ItemRoutes: Symbol.for('ItemRoutes'),
+  CategoryService: Symbol.for('CategoryService'),
+  CategoryRoutes: Symbol.for('CategoryRoutes'),
 };
 
 export { TYPES };
