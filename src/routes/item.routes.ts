@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from 'fastify';
 import { injectable, inject } from 'inversify';
 import { Routes } from './types';
-import { ItemService } from '../services/item.service';
+import ItemService from '../services/item.service';
 import * as yup from 'yup';
 import { TYPES } from '../types/ioc-types';
 

@@ -15,6 +15,7 @@ model Ticket {
   name      String
   isPaid    Boolean
   createdAt DateTime
+  totalCost Int?
   items     Item[]
 }
 

@@ -1,4 +1,4 @@
-import { CategoryService } from './category.service';
+import CategoryService from './category.service';
 import { HttpError } from './../common/errors/http-error';
 import { injectable, inject } from 'inversify';
 import { FastifyInstance } from 'fastify';
@@ -20,7 +20,7 @@ type CreateItem = {
 };
 
 @injectable()
-export class ItemService {
+class ItemService {
   private _categoryService: CategoryService;
 
   public constructor(
@@ -80,3 +80,5 @@ export class ItemService {
     });
   }
 }
+
+export default ItemService;

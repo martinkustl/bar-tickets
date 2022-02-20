@@ -3,7 +3,7 @@ import { FastifyPluginAsync } from 'fastify';
 import * as yup from 'yup';
 import { TYPES } from '../types/ioc-types';
 import { Routes } from './types';
-import { CategoryService } from '../services/category.service';
+import CategoryService from '../services/category.service';
 
 const getCategorySchema = {
   params: yup.object().shape({ id: yup.number().required() }),

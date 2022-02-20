@@ -6,6 +6,7 @@ import { TYPES } from './types/ioc-types';
 import { container } from './config/inversify.config';
 import { ObjectShape, OptionalObjectSchema } from 'yup/lib/object';
 import CategoryRoutes from './routes/category.routes';
+import TicketRoutes from './routes/ticket.routes';
 
 export type YupOptions = typeof yupDefaultOptions;
 
@@ -20,6 +21,7 @@ class App {
   public app: FastifyInstance;
   private _itemRoutes = container.get<ItemRoutes>(TYPES.ItemRoutes);
   private _categoryRoutes = container.get<CategoryRoutes>(TYPES.CategoryRoutes);
+  private _ticketRoutes = container.get<TicketRoutes>(TYPES.TicketRoutes);
 
   public constructor(public opts = {}) {
     this.app = fastify(opts);
@@ -36,7 +38,7 @@ class App {
       prefix: '/items',
     });
     this.app.register(this._categoryRoutes.init, { prefix: '/categories' });
-    this.app.register(require('./routes/ticket'), { prefix: '/tickets' });
+    this.app.register(this._ticketRoutes.init, { prefix: '/tickets' });
   }
 
   private setErrorHandler() {

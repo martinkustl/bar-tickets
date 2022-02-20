@@ -12,7 +12,7 @@ type CreateCategory = {
 };
 
 @injectable()
-export class CategoryService {
+class CategoryService {
   public async getAll(fastify: FastifyInstance) {
     return await fastify.prisma.category.findMany();
   }
@@ -82,3 +82,5 @@ export class CategoryService {
     });
   }
 }
+
+export default CategoryService;
