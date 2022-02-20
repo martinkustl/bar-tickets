@@ -70,7 +70,7 @@ class ItemRoutes extends Routes {
 
   protected getAll: FastifyPluginAsync = async (fastify) => {
     fastify.get('/', async (_, reply) => {
-      const items = await this._itemService.getAll(fastify);
+      const items = await this._itemService.selectAll(fastify);
       return reply.code(200).send(items);
     });
   };
@@ -83,7 +83,7 @@ class ItemRoutes extends Routes {
       },
       async (req, reply) => {
         const { id } = req.params;
-        const item = await this._itemService.getItem(fastify, id);
+        const item = await this._itemService.selectOne(fastify, id);
         return reply.code(200).send(item);
       }
     );
@@ -94,7 +94,7 @@ class ItemRoutes extends Routes {
       '/',
       { schema: postItemSchema },
       async (req, reply) => {
-        const newItem = await this._itemService.createItem(fastify, {
+        const newItem = await this._itemService.create(fastify, {
           ...req.body,
         });
         return reply.code(200).send(newItem);
@@ -108,7 +108,7 @@ class ItemRoutes extends Routes {
       { schema: patchItemSchema },
       async (req, reply) => {
         const { id } = req.params;
-        const updatedItem = await this._itemService.updateItem(fastify, {
+        const updatedItem = await this._itemService.update(fastify, {
           id,
           ...req.body,
         });
@@ -123,7 +123,7 @@ class ItemRoutes extends Routes {
       { schema: deleteItemSchema },
       async (req, reply) => {
         const { id } = req.params;
-        const deletedItem = await this._itemService.deleteItem(fastify, id);
+        const deletedItem = await this._itemService.delete(fastify, id);
         return reply.code(200).send(deletedItem);
       }
     );

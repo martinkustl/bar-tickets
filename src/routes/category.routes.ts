@@ -68,7 +68,7 @@ class CategoryRoutes extends Routes {
 
   protected getAll: FastifyPluginAsync = async (fastify) => {
     fastify.get('/', async (_, reply) => {
-      const categories = await this._categoriesService.getAll(fastify);
+      const categories = await this._categoriesService.selectAll(fastify);
       return reply.code(200).send(categories);
     });
   };
@@ -81,7 +81,7 @@ class CategoryRoutes extends Routes {
       },
       async (req, reply) => {
         const { id } = req.params;
-        const category = await this._categoriesService.getCategory(fastify, id);
+        const category = await this._categoriesService.selectOne(fastify, id);
         return reply.code(200).send(category);
       }
     );
@@ -92,10 +92,9 @@ class CategoryRoutes extends Routes {
       '/',
       { schema: postCategorySchema },
       async (req, reply) => {
-        const newCategory = await this._categoriesService.createCategory(
-          fastify,
-          { ...req.body }
-        );
+        const newCategory = await this._categoriesService.create(fastify, {
+          ...req.body,
+        });
         return reply.code(200).send(newCategory);
       }
     );
@@ -106,13 +105,10 @@ class CategoryRoutes extends Routes {
       '/:id',
       { schema: patchCategorySchema },
       async (req, reply) => {
-        const updatedCategory = await this._categoriesService.updateCategory(
-          fastify,
-          {
-            id: req.params.id,
-            name: req.body.name,
-          }
-        );
+        const updatedCategory = await this._categoriesService.update(fastify, {
+          id: req.params.id,
+          name: req.body.name,
+        });
 
         return reply.code(200).send(updatedCategory);
       }
@@ -125,10 +121,7 @@ class CategoryRoutes extends Routes {
       { schema: deleteCategorySchema },
       async (req, reply) => {
         const { id } = req.params;
-        const deletedItem = await this._categoriesService.deleteCategory(
-          fastify,
-          id
-        );
+        const deletedItem = await this._categoriesService.delete(fastify, id);
         return reply.code(200).send(deletedItem);
       }
     );

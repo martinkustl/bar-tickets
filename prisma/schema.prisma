@@ -13,8 +13,8 @@ datasource db {
 model Ticket {
   id        Int      @id @default(autoincrement())
   name      String
-  isPaid    Boolean
-  createdAt DateTime
+  isPaid    Boolean @default(false)
+  createdAt DateTime @default(now())
   totalCost Int?
   items     Item[]
 }

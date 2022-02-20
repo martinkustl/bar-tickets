@@ -13,11 +13,11 @@ type CreateCategory = {
 
 @injectable()
 class CategoryService {
-  public async getAll(fastify: FastifyInstance) {
+  public async selectAll(fastify: FastifyInstance) {
     return await fastify.prisma.category.findMany();
   }
 
-  public async getCategory(fastify: FastifyInstance, id: number) {
+  public async selectOne(fastify: FastifyInstance, id: number) {
     const category = await fastify.prisma.category.findUnique({
       where: {
         id,
@@ -29,12 +29,9 @@ class CategoryService {
     return category;
   }
 
-  public async updateCategory(
-    fastify: FastifyInstance,
-    category: UpdateCategory
-  ) {
+  public async update(fastify: FastifyInstance, category: UpdateCategory) {
     const { id, name } = category;
-    await this.getCategory(fastify, id);
+    await this.selectOne(fastify, id);
 
     return await fastify.prisma.category.update({
       where: {
@@ -46,8 +43,8 @@ class CategoryService {
     });
   }
 
-  public async deleteCategory(fastify: FastifyInstance, id: number) {
-    await this.getCategory(fastify, id);
+  public async delete(fastify: FastifyInstance, id: number) {
+    await this.selectOne(fastify, id);
 
     const noOfCategores = await fastify.prisma.item.aggregate({
       _count: {
@@ -71,10 +68,7 @@ class CategoryService {
     });
   }
 
-  public async createCategory(
-    fastify: FastifyInstance,
-    { name }: CreateCategory
-  ) {
+  public async create(fastify: FastifyInstance, { name }: CreateCategory) {
     return await fastify.prisma.category.create({
       data: {
         name,

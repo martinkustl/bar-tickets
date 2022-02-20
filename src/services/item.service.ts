@@ -29,27 +29,27 @@ class ItemService {
     this._categoryService = categoryService;
   }
 
-  public async getAll(fastify: FastifyInstance) {
+  public async selectAll(fastify: FastifyInstance) {
     return await fastify.prisma.item.findMany();
   }
 
-  public async getItem(fastify: FastifyInstance, id: number) {
+  public async selectOne(fastify: FastifyInstance, id: number) {
     const item = await fastify.prisma.item.findUnique({
       where: { id },
     });
 
-    if (!item) throw new HttpError(404, 'Category not found!');
+    if (!item) throw new HttpError(404, 'Item not found!');
 
     return item;
   }
 
-  public async updateItem(fastify: FastifyInstance, item: UpdateItem) {
+  public async update(fastify: FastifyInstance, item: UpdateItem) {
     const { id, ...toUpdate } = item;
 
-    await this.getItem(fastify, id);
+    await this.selectOne(fastify, id);
 
     if (toUpdate.categoryId) {
-      await this._categoryService.getCategory(fastify, toUpdate.categoryId);
+      await this._categoryService.selectOne(fastify, toUpdate.categoryId);
     }
 
     return await fastify.prisma.item.update({
@@ -62,8 +62,8 @@ class ItemService {
     });
   }
 
-  public async deleteItem(fastify: FastifyInstance, id: number) {
-    await this.getItem(fastify, id);
+  public async delete(fastify: FastifyInstance, id: number) {
+    await this.selectOne(fastify, id);
 
     return await fastify.prisma.item.delete({
       where: {
@@ -72,7 +72,7 @@ class ItemService {
     });
   }
 
-  public async createItem(fastify: FastifyInstance, item: CreateItem) {
+  public async create(fastify: FastifyInstance, item: CreateItem) {
     return await fastify.prisma.item.create({
       data: {
         ...item,
