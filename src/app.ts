@@ -1,5 +1,4 @@
-import { ValidationError } from './common/errors/validation-error';
-import { HttpError } from './common/errors/http-error';
+import { HttpError, ValidationError } from './common/errors';
 import fastify, { FastifyInstance } from 'fastify';
 import prismaPlugin from './plugins/prisma';
 import ItemRoutes from './routes/item';
