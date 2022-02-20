@@ -38,7 +38,7 @@ const patchItemSchema = {
   }),
 };
 
-type UpdateItem = {
+type PatchItem = {
   Params: yup.InferType<typeof patchItemSchema.params>;
   Body: yup.InferType<typeof patchItemSchema.body>;
 };
@@ -103,7 +103,7 @@ class ItemRoutes extends Routes {
   };
 
   protected patchOne: FastifyPluginAsync = async (fastify) => {
-    fastify.patch<UpdateItem>(
+    fastify.patch<PatchItem>(
       '/:id',
       { schema: patchItemSchema },
       async (req, reply) => {

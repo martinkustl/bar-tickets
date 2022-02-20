@@ -5,6 +5,7 @@ import ItemRoutes from './routes/item.routes';
 import { TYPES } from './types/ioc-types';
 import { container } from './config/inversify.config';
 import { ObjectShape, OptionalObjectSchema } from 'yup/lib/object';
+import CategoryRoutes from './routes/category.routes';
 
 export type YupOptions = typeof yupDefaultOptions;
 
@@ -18,6 +19,7 @@ const yupDefaultOptions = {
 class App {
   public app: FastifyInstance;
   private _itemRoutes = container.get<ItemRoutes>(TYPES.ItemRoutes);
+  private _categoryRoutes = container.get<CategoryRoutes>(TYPES.CategoryRoutes);
 
   public constructor(public opts = {}) {
     this.app = fastify(opts);
@@ -33,6 +35,7 @@ class App {
     this.app.register(this._itemRoutes.init, {
       prefix: '/items',
     });
+    this.app.register(this._categoryRoutes.init, { prefix: '/categories' });
     this.app.register(require('./routes/ticket'), { prefix: '/tickets' });
   }
 
@@ -41,11 +44,19 @@ class App {
       req.log.error(err);
 
       if (err instanceof HttpError) {
-        reply.status(err.statusCode).send(`HttpError: ${err.message}`);
+        reply.status(err.statusCode).send({
+          statusCode: err.statusCode,
+          message: `HttpError: ${err.message}`,
+        });
       } else if (err instanceof ValidationError) {
-        reply.status(err.statusCode).send(`ValidationError: ${err.message}`);
+        reply.status(err.statusCode).send({
+          statusCode: err.statusCode,
+          message: `ValidationError: ${err.message}`,
+        });
       } else {
-        reply.status(err?.statusCode ?? 500).send('Unknown error!');
+        reply
+          .status(err?.statusCode ?? 500)
+          .send({ statusCode: 500, message: 'Unknown error!' });
       }
     });
   }
