@@ -24,19 +24,11 @@ model Item {
   size       Float
   price      Int
   tickets    Ticket[]
-  Units      Units    @relation(fields: [unitsId], references: [id])
-  unitsId    Int
   Category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  items Item[]
-}
-
-model Units {
   id    Int    @id @default(autoincrement())
   name  String @unique
   items Item[]

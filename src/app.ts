@@ -1,7 +1,7 @@
 import { HttpError, ValidationError } from './common/errors';
 import fastify, { FastifyInstance } from 'fastify';
 import prismaPlugin from './plugins/prisma';
-import ItemRoutes from './routes/item';
+import ItemRoutes from './routes/item.routes';
 import { TYPES } from './types/ioc-types';
 import { container } from './config/inversify.config';
 import { ObjectShape, OptionalObjectSchema } from 'yup/lib/object';
@@ -27,6 +27,14 @@ class App {
   }
 
   // TODO - add auth via fastify-jwt. See: https://www.npmjs.com/package/fastify-jwt
+
+  private registerRoutes() {
+    this.app.register(prismaPlugin);
+    this.app.register(this._itemRoutes.init, {
+      prefix: '/items',
+    });
+    this.app.register(require('./routes/ticket'), { prefix: '/tickets' });
+  }
 
   private setErrorHandler() {
     this.app.setErrorHandler((err, req, reply) => {
@@ -60,14 +68,6 @@ class App {
         };
       }
     );
-  }
-
-  private registerRoutes() {
-    this.app.register(prismaPlugin);
-    this.app.register(this._itemRoutes.init, {
-      prefix: '/items',
-    });
-    this.app.register(require('./routes/ticket'), { prefix: '/tickets' });
   }
 }
 

@@ -4,12 +4,19 @@ import { injectable, inject } from 'inversify';
 import { FastifyInstance } from 'fastify';
 import { TYPES } from '../types/ioc-types';
 
-type Item = {
+type UpdateItem = {
   id: number;
   name?: string;
   size?: number;
   price?: number;
   categoryId?: number;
+};
+
+type CreateItem = {
+  name: string;
+  size: number;
+  price: number;
+  categoryId: number;
 };
 
 @injectable()
@@ -36,7 +43,7 @@ export class ItemService {
     return item;
   }
 
-  public async updateItem(fastify: FastifyInstance, item: Item) {
+  public async updateItem(fastify: FastifyInstance, item: UpdateItem) {
     const { id, ...toUpdate } = item;
 
     await this.getItem(fastify, id);
@@ -61,6 +68,14 @@ export class ItemService {
     return await fastify.prisma.item.delete({
       where: {
         id,
+      },
+    });
+  }
+
+  public async createItem(fastify: FastifyInstance, item: CreateItem) {
+    return await fastify.prisma.item.create({
+      data: {
+        ...item,
       },
     });
   }

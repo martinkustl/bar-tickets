@@ -1,5 +1,4 @@
 import { items } from './items';
-import { units } from './units';
 import { categories } from './categories';
 
 import { PrismaClient } from '@prisma/client';
@@ -14,18 +13,6 @@ async function main(): Promise<void> {
       update: {},
       create: {
         ...category,
-      },
-    });
-  }
-
-  for (const unit of units) {
-    await prisma.units.upsert({
-      where: {
-        id: unit.id,
-      },
-      update: {},
-      create: {
-        ...unit,
       },
     });
   }
