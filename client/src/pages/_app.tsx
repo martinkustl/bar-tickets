@@ -1,23 +1,20 @@
-import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import theme from '@/theme';
 
 const GlobalStyle = createGlobalStyle`
-  body {
+  html, body, #__next {
+    height: 100%;
+  }
+
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 `;
 
-const theme = {
-  colors: {
-    primary: '#0070f3',
-  },
-};
-
-function MyApp({ Component, pageProps }: AppProps) {
+function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyle />
@@ -28,4 +25,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default CustomApp;
