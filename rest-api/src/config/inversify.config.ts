@@ -1,5 +1,5 @@
-import CategoryService from './../services/category.service';
-import ItemService from './../services/item.service';
+import CategoryService from '../services/category.service';
+import ItemService from '../services/item.service';
 import { Container } from 'inversify';
 import { TYPES } from '../types/ioc-types';
 import ItemRoutes from '../routes/item.routes';

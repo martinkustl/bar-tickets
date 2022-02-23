@@ -1,4 +1,4 @@
-import { HttpError } from './../common/errors/http-error';
+import { HttpError } from '../common/errors/http-error';
 import { injectable } from 'inversify';
 import { FastifyInstance } from 'fastify';
 

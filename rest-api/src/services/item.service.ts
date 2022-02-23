@@ -1,5 +1,5 @@
 import CategoryService from './category.service';
-import { HttpError } from './../common/errors/http-error';
+import { HttpError } from '../common/errors/http-error';
 import { injectable, inject } from 'inversify';
 import { FastifyInstance } from 'fastify';
 import { TYPES } from '../types/ioc-types';
