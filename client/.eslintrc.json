@@ -39,6 +39,8 @@
     "implicit-arrow-linebreak": "off",
     "import/prefer-default-export": "off",
     "no-unused-vars": "warn",
-    "indent": "off"
+    "indent": "off",
+    "no-confusing-arrow": "off",
+    "operator-linebreak": "off"
   }
 }

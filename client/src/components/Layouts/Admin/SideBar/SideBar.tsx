@@ -10,6 +10,7 @@ const StyledSideBar = styled.nav`
 
 const StyledHeading = styled.h2`
   padding: 1rem;
+  margin-bottom: 1rem;
 `;
 
 export const SideBar: FC = () => (

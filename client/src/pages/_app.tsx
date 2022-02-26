@@ -1,6 +1,9 @@
+import type { ReactElement, ReactNode } from 'react';
 import type { AppProps } from 'next/app';
+import type { NextPage } from 'next';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import theme from '@/theme';
+import { AdminLayout } from '@/components/Layouts/Admin/Admin';
 
 const GlobalStyle = createGlobalStyle`
   html, body, #__next {
@@ -15,13 +18,27 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const CustomApp = ({ Component, pageProps }: AppProps) => (
-  <>
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
-  </>
-);
+type NextPageWithLayout = NextPage & {
+  // eslint-disable-next-line no-unused-vars
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const CustomApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout =
+    Component.getLayout ?? ((page) => <AdminLayout>{page}</AdminLayout>);
+
+  const content = getLayout(<Component {...pageProps} />);
+
+  return (
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>{content}</ThemeProvider>
+    </>
+  );
+};
 
 export default CustomApp;

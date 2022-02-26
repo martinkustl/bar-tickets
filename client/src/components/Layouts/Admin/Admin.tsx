@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FC } from 'react';
+import { SideBar } from './SideBar/SideBar';
 
 const StyledLayout = styled.div`
   display: grid;
@@ -8,6 +9,9 @@ const StyledLayout = styled.div`
   width: 100%;
 `;
 
-const Layout: FC = ({ children }) => <StyledLayout>{children}</StyledLayout>;
-
-export default Layout;
+export const AdminLayout: FC = ({ children }) => (
+  <StyledLayout>
+    <SideBar />
+    {children}
+  </StyledLayout>
+);
