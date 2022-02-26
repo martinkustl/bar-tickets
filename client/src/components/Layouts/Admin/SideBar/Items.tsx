@@ -8,23 +8,23 @@ const StyledItems = styled.ul`
 
 const items = [
   {
-    id: 1,
+    path: '/categories',
     name: 'Kategorie položek',
   },
   {
-    id: 2,
+    path: '/items',
     name: 'Položky',
   },
   {
-    id: 3,
+    path: '/tickets',
     name: 'Lístky',
   },
 ];
 
 export const Items: FC = () => (
   <StyledItems>
-    {items.map(({ id, name }) => (
-      <Item key={id} id={id} name={name} />
+    {items.map(({ path, name }) => (
+      <Item key={path} path={path} name={name} />
     ))}
   </StyledItems>
 );

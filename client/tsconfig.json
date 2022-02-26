@@ -18,6 +18,7 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/errors/*": ["errors/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/theme": ["theme.ts"],
       "@/types": ["types.ts"]
     }

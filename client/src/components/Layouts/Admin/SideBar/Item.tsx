@@ -25,6 +25,7 @@ type PropsStyledItemLink = {
 const StyledItemLink = styled.a<PropsStyledItemLink>`
   width: 100%;
   text-align: left;
+  margin-bottom: 0.5rem;
   color: ${({ theme, isActive }) =>
     isActive ? theme.colors.light.hex : theme.colors.medium.hex};
   background-color: ${({ theme, isActive }) =>
@@ -41,17 +42,17 @@ const StyledItemLink = styled.a<PropsStyledItemLink>`
 `;
 
 type Props = {
-  id: number;
+  path: string;
   name: string;
 };
 
-export const Item: FC<Props> = ({ id, name }) => {
+export const Item: FC<Props> = ({ path, name }) => {
   const router = useRouter();
 
   return (
     <StyledItem>
-      <Link href={`/${id}`} passHref>
-        <StyledItemLink isActive={router.pathname === `/${id}`}>
+      <Link href={`${path}`} passHref>
+        <StyledItemLink isActive={router.pathname === `${path}`}>
           {name}
         </StyledItemLink>
       </Link>

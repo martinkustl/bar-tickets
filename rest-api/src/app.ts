@@ -1,5 +1,6 @@
 import { HttpError, ValidationError } from './common/errors';
 import fastify, { FastifyInstance } from 'fastify';
+import fastifyCors from 'fastify-cors';
 import prismaPlugin from './plugins/prisma';
 import ItemRoutes from './routes/item.routes';
 import { TYPES } from './types/ioc-types';
@@ -28,6 +29,7 @@ class App {
     this.setErrorHandler();
     this.setValidatorCompiler();
     this.registerRoutes();
+    this.enableCors();
   }
 
   // TODO - add auth via fastify-jwt. See: https://www.npmjs.com/package/fastify-jwt
@@ -81,6 +83,21 @@ class App {
         };
       }
     );
+  }
+
+  private enableCors() {
+    this.app.register(fastifyCors, {
+      origin: (origin, cb) => {
+        const hostname = new URL(origin).hostname;
+        if (hostname === 'localhost') {
+          //  Request from localhost will pass
+          cb(null, true);
+          return;
+        }
+        // Generate an error on other origins, disabling access
+        cb(new HttpError(422, 'Not allowed'), false);
+      },
+    });
   }
 }
 

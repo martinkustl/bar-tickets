@@ -6,6 +6,8 @@ import { HttpError } from '../errors/http-error';
 async function fetcher(url: string) {
   const res = await fetch(url);
 
+  console.log(url);
+
   if (!res.ok) {
     throw new HttpError(res.status, res.statusText);
   }
@@ -26,13 +28,15 @@ const swrConfiguration: SWRConfiguration = {
 function useHttp<Data = any, Error = IHttpError>(
   initUrl: Key
 ): SWRResponse<Data, Error> {
-  const [url, setUrl] = useState(initUrl);
+  // const [url, setUrl] = useState(initUrl);
 
-  useEffect(() => {
-    setUrl(initUrl);
-  }, [initUrl]);
+  // useEffect(() => {
+  //   setUrl(initUrl);
+  // }, [initUrl]);
 
-  const { ...SWRProps } = useSWR<Data, Error>(url, swrConfiguration);
+  console.log(initUrl);
+
+  const { ...SWRProps } = useSWR<Data, Error>(initUrl, swrConfiguration);
 
   return {
     ...SWRProps,
