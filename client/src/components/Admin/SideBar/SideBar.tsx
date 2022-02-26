@@ -8,8 +8,13 @@ const StyledSideBar = styled.nav`
   padding: 1rem;
 `;
 
+const StyledHeading = styled.h2`
+  padding: 1rem;
+`;
+
 export const SideBar: FC = () => (
   <StyledSideBar>
+    <StyledHeading>Admin Panel</StyledHeading>
     <Items />
   </StyledSideBar>
 );

@@ -8,7 +8,7 @@ export const Button = styled.button`
   background-color: var(--color-light);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color 0.3s;
+  /* transition: color 0.3s; */
   &:focus {
     outline: none;
   }

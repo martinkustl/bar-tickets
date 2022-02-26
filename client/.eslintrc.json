@@ -37,7 +37,8 @@
     "quotes": ["warn", "single", { "allowTemplateLiterals": true }],
     "import/no-unresolved": ["error", { "ignore": ["^@"] }],
     "implicit-arrow-linebreak": "off",
-    "import/prefer-default-export": "off"
-    // "no-explicit-any": "error"
+    "import/prefer-default-export": "off",
+    "no-unused-vars": "warn",
+    "indent": "off"
   }
 }

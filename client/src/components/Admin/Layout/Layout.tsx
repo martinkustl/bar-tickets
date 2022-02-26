@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 const StyledLayout = styled.div`
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 270px auto;
   height: 100%;
   width: 100%;
 `;
