@@ -8,7 +8,7 @@ const StyledSideBar = styled.nav`
   padding: 1rem;
 `;
 
-const StyledHeading = styled.h2`
+const StyledHeading = styled.h1`
   padding: 1rem;
   margin-bottom: 1rem;
 `;

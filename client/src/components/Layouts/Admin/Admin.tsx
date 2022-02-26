@@ -9,9 +9,14 @@ const StyledLayout = styled.div`
   width: 100%;
 `;
 
+const StyledContent = styled.main`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const AdminLayout: FC = ({ children }) => (
   <StyledLayout>
     <SideBar />
-    {children}
+    <StyledContent>{children}</StyledContent>
   </StyledLayout>
 );
