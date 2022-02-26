@@ -8,8 +8,6 @@ const StyledLayout = styled.div`
   width: 100%;
 `;
 
-const Layout: FC = ({ children }) => {
-  return <StyledLayout>{children}</StyledLayout>;
-};
+const Layout: FC = ({ children }) => <StyledLayout>{children}</StyledLayout>;
 
 export default Layout;

@@ -1,13 +1,15 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { Items } from './Items';
 
 const StyledSideBar = styled.nav`
-  background-color: black;
+  border-right: 1px solid black;
   height: 100%;
+  padding: 1rem;
 `;
 
-const SideBar: FC = () => {
-  return <StyledSideBar></StyledSideBar>;
-};
-
-export default SideBar;
+export const SideBar: FC = () => (
+  <StyledSideBar>
+    <Items />
+  </StyledSideBar>
+);

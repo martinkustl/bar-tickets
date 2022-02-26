@@ -14,15 +14,13 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-function CustomApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </>
-  );
-}
+const CustomApp = ({ Component, pageProps }: AppProps) => (
+  <>
+    <GlobalStyle />
+    <ThemeProvider theme={theme}>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  </>
+);
 
 export default CustomApp;

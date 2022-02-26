@@ -14,6 +14,7 @@ export default class CustomDocument extends Document {
         <Head>
           <link
             rel="stylesheet"
+            // eslint-disable-next-line max-len
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
         </Head>

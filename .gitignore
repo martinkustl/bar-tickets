@@ -43,3 +43,6 @@
 /rest-api/node_modules
 # Keep environment variables out of version control
 /rest-api/.env
+
+.history/
+.idea
