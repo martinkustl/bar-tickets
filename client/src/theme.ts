@@ -5,7 +5,7 @@ const theme = {
   colors: {
     primary: { hex: '#881c27', rgb: '136, 28, 39' },
     light: { hex: '#ffffff' },
-    medium: { hex: '#5a5753' },
+    medium: { hex: '#5a5753', rgb: '90, 87, 83' },
   },
   radius: {
     normal: '5px',

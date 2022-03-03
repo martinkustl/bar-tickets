@@ -1,19 +1,26 @@
-import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { GetServerSideProps } from 'next';
 import useHttp from '@/hooks/http';
 import { Heading } from '@/components/AdminDetail/Heading';
+import { Table } from '@/components/Table/Table';
+import { TableBodyRow } from '@/components/Table/types';
 
 const AdminDetail: FC = () => {
   const { data, error } = useHttp<{ id: number; name: string }[]>(
-    `http://localhost:3001/categories`
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`
   );
 
-  console.log(data);
+  const handleDeleteClick = (column: TableBodyRow) => {
+    console.log(column);
+  };
+
+  const handleEditClick = (column: TableBodyRow) => {
+    console.log(column);
+  };
 
   return (
     <div>
       <Heading heading="Administrace kategorií položek" />
+      <Table onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} />
     </div>
   );
 };

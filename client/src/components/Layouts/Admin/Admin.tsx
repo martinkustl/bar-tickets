@@ -12,6 +12,7 @@ const StyledLayout = styled.div`
 const StyledContent = styled.main`
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 `;
 
 export const AdminLayout: FC = ({ children }) => (
