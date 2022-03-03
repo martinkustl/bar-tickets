@@ -6,6 +6,11 @@ const theme = {
     primary: { hex: '#881c27', rgb: '136, 28, 39' },
     light: { hex: '#ffffff' },
     medium: { hex: '#5a5753', rgb: '90, 87, 83' },
+    danger: { hex: '#ff0022', rgb: '255,0,34' },
+    blue: {
+      hex: '#3880ff',
+      rgb: '56,128,255',
+    },
   },
   radius: {
     normal: '5px',

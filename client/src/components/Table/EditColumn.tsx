@@ -1,16 +1,23 @@
 import { OnEditClick, TableBodyRow } from '@/components/Table/types';
 import { FC } from 'react';
 import { ColumnBase } from '@/components/Table/ColumnBase';
+import { useTheme } from 'styled-components';
+import { Pencil } from '@styled-icons/bootstrap';
+import { Button } from '@/components/UI/Button';
 
 type Props = {
   item: TableBodyRow;
   onEditClick: OnEditClick;
 };
 
-export const EditColumn: FC<Props> = ({ item, onEditClick }) => (
-  <ColumnBase>
-    <button type="button" onClick={() => onEditClick(item)}>
-      e
-    </button>
-  </ColumnBase>
-);
+export const EditColumn: FC<Props> = ({ item, onEditClick }) => {
+  const theme = useTheme();
+
+  return (
+    <ColumnBase>
+      <Button type="button" onClick={() => onEditClick(item)}>
+        <Pencil width={20} height={20} color={theme.colors.blue.hex} />
+      </Button>
+    </ColumnBase>
+  );
+};
