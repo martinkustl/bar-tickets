@@ -3,9 +3,9 @@ import { Input } from '@/components/UI/FormInputs/Input';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button } from '@/components/UI/Button';
 import { FC } from 'react';
 import useSimpleHttp from '@/hooks/simpleHttp';
+import { FormSubmitButton } from '@/components/UI/Buttons/FormSubmitButton';
 
 const StyledFormWrapper = styled.section`
   //margin-top: 3rem;
@@ -22,10 +22,6 @@ const StyledNewCategoryForm = styled.form`
   margin-left: auto;
   margin-right: auto;
   min-width: 400px;
-  //display: flex;
-  //flex-direction: column;
-  //align-items: center;
-  //justify-content: center;
 `;
 
 const StyledHeading = styled.h3`
@@ -36,14 +32,6 @@ const StyledHorizontalLine = styled.hr`
   width: 400px;
   border: 1px solid ${({ theme }) => theme.colors.primary.hex};
   box-shadow: none;
-`;
-
-const StyledSubmitButton = styled(Button)`
-  background-color: ${({ theme }) => theme.colors.primary.hex};
-  color: ${({ theme }) => theme.colors.light.hex};
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  border-radius: ${({ theme }) => theme.radius.normal};
 `;
 
 const newCategorySchema = yup.object({
@@ -103,7 +91,7 @@ const NewCategoryForm: FC<Props> = ({ url, mutateSwr }) => {
           name="name"
           label="Název kategorie"
         />
-        <StyledSubmitButton>Vytvořit kategorii</StyledSubmitButton>
+        <FormSubmitButton>Vytvořit kategorii</FormSubmitButton>
       </StyledNewCategoryForm>
     </StyledFormWrapper>
   );

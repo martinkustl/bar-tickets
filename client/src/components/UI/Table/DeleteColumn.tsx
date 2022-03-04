@@ -2,7 +2,7 @@ import { DeleteBtn, TableBodyRow } from '@/types';
 import { FC } from 'react';
 import { ColumnBase } from '@/components/UI/Table/ColumnBase';
 import { Trash } from '@styled-icons/bootstrap';
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/UI/Buttons/Button';
 import { useTheme } from 'styled-components';
 import useSimpleHttp from '@/hooks/simpleHttp';
 

@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { ColumnBase } from '@/components/UI/Table/ColumnBase';
 import { useTheme } from 'styled-components';
 import { Pencil } from '@styled-icons/bootstrap';
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/UI/Buttons/Button';
 import { Modal } from '@/components/UI/Modal';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';

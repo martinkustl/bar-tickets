@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Input } from '@/components/UI/FormInputs/Input';
 import styled from 'styled-components';
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/UI/Buttons/Button';
+import { FormSubmitButton } from '@/components/UI/Buttons/FormSubmitButton';
 import { OnCancelChanges, OnUpdateRequest, TableBodyRow } from '@/types';
 
 const StyledFormWrapper = styled.div`
@@ -35,14 +36,6 @@ const StyledButtonsWrapper = styled.div`
 
 const StyledCancelButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.medium.hex};
-  color: ${({ theme }) => theme.colors.light.hex};
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  border-radius: ${({ theme }) => theme.radius.normal};
-`;
-
-const StyledSubmitButton = styled(Button)`
-  background-color: ${({ theme }) => theme.colors.primary.hex};
   color: ${({ theme }) => theme.colors.light.hex};
   padding: 0.5rem 1rem;
   margin-top: 1rem;
@@ -100,7 +93,7 @@ const EditCategoryForm: FC<Props> = ({
           <StyledCancelButton type="button" onClick={handleCancelButtonClick}>
             Zavřít
           </StyledCancelButton>
-          <StyledSubmitButton>Provést změny</StyledSubmitButton>
+          <FormSubmitButton>Provést změny</FormSubmitButton>
         </StyledButtonsWrapper>
       </StyledForm>
     </StyledFormWrapper>
