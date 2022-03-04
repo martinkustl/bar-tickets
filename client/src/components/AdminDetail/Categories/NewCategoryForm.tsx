@@ -30,7 +30,7 @@ type Props = {
   mutateSwr: (newCategory: NewCategory) => Promise<void>;
 };
 
-const NewCategoryForm: FC<Props> = ({ url, mutateSwr }) => {
+export const NewCategoryForm: FC<Props> = ({ url, mutateSwr }) => {
   const {
     register,
     handleSubmit,
@@ -70,5 +70,3 @@ const NewCategoryForm: FC<Props> = ({ url, mutateSwr }) => {
     </NewRecordForm>
   );
 };
-
-export default NewCategoryForm;

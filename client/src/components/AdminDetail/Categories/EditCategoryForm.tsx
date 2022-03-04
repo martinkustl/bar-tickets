@@ -26,7 +26,7 @@ type Props = {
   onModalChange: (newState: boolean) => void;
 };
 
-const EditCategoryForm: FC<Props> = ({
+export const EditCategoryForm: FC<Props> = ({
   url,
   mutateSwr,
   // onUpdateRequest,
@@ -77,5 +77,3 @@ const EditCategoryForm: FC<Props> = ({
     </EditRecordForm>
   );
 };
-
-export default EditCategoryForm;

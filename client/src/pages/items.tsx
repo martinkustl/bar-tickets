@@ -3,7 +3,8 @@ import { Heading } from '@/components/AdminDetail/Heading';
 import { Table } from '@/components/UI/Table/Table';
 import useHttp from '@/hooks/http';
 import { EditBtn, TableBodyRow } from '@/types';
-import EditItemForm from '@/components/AdminDetail/Items/EditItemForm';
+import { EditItemForm } from '@/components/AdminDetail/Items/EditItemForm';
+import { NewItemForm } from '@/components/AdminDetail/Items/NewItemForm';
 
 const headers = {
   name: {
@@ -74,6 +75,13 @@ const Items: FC = () => {
         editBtn={editBtn}
         rows={data}
         headers={headers}
+      />
+      <NewItemForm
+        url={`${process.env.NEXT_PUBLIC_BASE_API_URL}/items`}
+        mutateSwr={async (newCategory) => {
+          if (!data) return;
+          await mutate([...data, newCategory], false);
+        }}
       />
     </div>
   );

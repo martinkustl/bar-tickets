@@ -3,8 +3,8 @@ import useHttp from '@/hooks/http';
 import { Heading } from '@/components/AdminDetail/Heading';
 import { Table } from '@/components/UI/Table/Table';
 import { EditBtn, TableBodyRow } from '@/types';
-import NewCategoryForm from '@/components/AdminDetail/Categories/NewCategoryForm';
-import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';
+import { NewCategoryForm } from '@/components/AdminDetail/Categories/NewCategoryForm';
+import { EditCategoryForm } from '@/components/AdminDetail/Categories/EditCategoryForm';
 
 type Category = {
   id: number;

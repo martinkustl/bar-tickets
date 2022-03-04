@@ -1,73 +1,68 @@
-import { FC } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { Input } from '@/components/UI/FormInputs/Input';
-import { EditMutateSwr, TableBodyRow } from '@/types';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { FC } from 'react';
 import useSimpleHttp from '@/hooks/simpleHttp';
-import { EditRecordForm } from '@/components/UI/Forms/EditRecordForm';
+import { NewRecordForm } from '@/components/UI/Forms/NewRecordForm';
 import { useErrorToast } from '@/hooks/errorToast';
 
-const editCategorySchema = yup.object({
+const editItemSchema = yup.object({
   name: yup.string().required('Název položky je vyžadován!'),
   size: yup.number().required('Velikost položky je vyžadována!'),
   price: yup.number().required('Cena položky je vyžadována!'),
 });
 
-type FormData = yup.InferType<typeof editCategorySchema>;
+type FormData = yup.InferType<typeof editItemSchema>;
+
+type NewItem = {
+  id: number;
+  name: string;
+  size: number;
+  price: number;
+};
 
 const requestIdentifiers = {
-  updateItem: 'updateItem',
+  createCategory: 'createCategory',
 };
+
+//  mutateSwr: (updatedRow: TableBodyRow) => Promise<void>;
 
 type Props = {
   url: string;
-  mutateSwr: EditMutateSwr;
-  item: TableBodyRow;
   // eslint-disable-next-line no-unused-vars
-  onModalChange: (newState: boolean) => void;
+  mutateSwr: (newItem: NewItem) => Promise<void>;
 };
 
-export const EditItemForm: FC<Props> = ({
-  url,
-  mutateSwr,
-  // onUpdateRequest,
-  item,
-  onModalChange,
-}) => {
+export const NewItemForm: FC<Props> = ({ url, mutateSwr }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(editCategorySchema),
-    defaultValues: {
-      ...item,
-    },
+    resolver: yupResolver(editItemSchema),
   });
 
-  const { sendRequest, error } = useSimpleHttp<TableBodyRow>();
+  const { sendRequest, error } = useSimpleHttp<NewItem>();
 
   useErrorToast(error);
 
   const onSubmit = handleSubmit(async (data) => {
+    // onCreateRequest(data);
     await sendRequest({
       url,
-      method: 'PATCH',
+      method: 'POST',
       body: data,
-      reqIdentifer: requestIdentifiers.updateItem,
+      reqIdentifer: requestIdentifiers.createCategory,
       mutateSwr,
     });
-    onModalChange(false);
   });
 
   return (
-    <EditRecordForm
-      headingText="Editace položky"
-      submitText="Provést změny"
-      cancelText="Zrušit změny"
+    <NewRecordForm
+      headingText="Nová položka"
+      submitText="Vytvořit položku"
       onSubmit={onSubmit}
-      onCancelChanges={() => onModalChange(false)}
     >
       <Input
         placeholder="text"
@@ -84,12 +79,12 @@ export const EditItemForm: FC<Props> = ({
         label="Velikost"
       />
       <Input
-        placeholder="Cena (např. 40)"
+        placeholder="Cena (např. 30)"
         register={register}
         name="price"
         errors={errors}
         label="Cena"
       />
-    </EditRecordForm>
+    </NewRecordForm>
   );
 };
