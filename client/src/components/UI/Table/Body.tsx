@@ -1,9 +1,4 @@
-import {
-  DeleteBtn,
-  EditBtn,
-  TableBodyRows,
-  TableHeaderColumns,
-} from '@/components/UI/Table/types';
+import { DeleteBtn, EditBtn, TableBodyRows, TableHeaderColumns } from '@/types';
 import { FC } from 'react';
 import { DeleteColumn } from '@/components/UI/Table/DeleteColumn';
 import { ColumnBase } from '@/components/UI/Table/ColumnBase';

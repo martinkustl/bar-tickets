@@ -1,4 +1,4 @@
-import { TableHeaderColumn } from '@/components/UI/Table/types';
+import { TableHeaderColumn } from '@/types';
 import styled from 'styled-components';
 
 const StyledHeaderColumn = styled.th`

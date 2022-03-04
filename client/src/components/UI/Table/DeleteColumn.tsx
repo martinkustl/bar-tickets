@@ -1,4 +1,4 @@
-import { DeleteBtn, TableBodyRow } from '@/components/UI/Table/types';
+import { DeleteBtn, TableBodyRow } from '@/types';
 import { FC } from 'react';
 import { ColumnBase } from '@/components/UI/Table/ColumnBase';
 import { Trash } from '@styled-icons/bootstrap';

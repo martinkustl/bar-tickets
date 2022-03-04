@@ -1,5 +1,4 @@
 import { FC } from 'react';
-
 import styled from 'styled-components';
 import { Breakpoint } from '@/types';
 import { breakpoint } from '@/constants';

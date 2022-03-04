@@ -1,12 +1,7 @@
 import { FC } from 'react';
 import { Header } from '@/components/UI/Table/Header';
 import { Body } from '@/components/UI/Table/Body';
-import {
-  DeleteBtn,
-  EditBtn,
-  TableBodyRows,
-  TableHeaderColumns,
-} from '@/components/UI/Table/types';
+import { DeleteBtn, EditBtn, TableBodyRows, TableHeaderColumns } from '@/types';
 import styled from 'styled-components';
 
 const StyledTable = styled.table`
