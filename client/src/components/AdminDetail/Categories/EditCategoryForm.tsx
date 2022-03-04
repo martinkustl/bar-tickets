@@ -5,11 +5,7 @@ import * as yup from 'yup';
 import { Input } from '@/components/UI/FormInputs/Input';
 import styled from 'styled-components';
 import { Button } from '@/components/UI/Button';
-import {
-  OnCancelChanges,
-  OnUpdateRequest,
-  TableBodyRow,
-} from '@/components/UI/Table/types';
+import { OnCancelChanges, OnUpdateRequest, TableBodyRow } from '@/types';
 
 const StyledFormWrapper = styled.div`
   display: flex;
