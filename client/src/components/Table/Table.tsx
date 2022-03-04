@@ -3,44 +3,11 @@ import { Header } from '@/components/Table/Header';
 import { Body } from '@/components/Table/Body';
 import {
   DeleteBtn,
-  OnEditClick,
+  EditBtn,
   TableBodyRows,
   TableHeaderColumns,
 } from '@/components/Table/types';
 import styled from 'styled-components';
-
-// const headers = {
-//   text: {
-//     name: 'Text',
-//   },
-//   phone: {
-//     name: 'Telefon',
-//   },
-//   edit: {
-//     name: 'Editace',
-//   },
-//   delete: {
-//     name: 'Mazání',
-//   },
-// };
-//
-// const columns = [
-//   {
-//     id: 1,
-//     text: 'some text',
-//     phone: 124232,
-//   },
-//   {
-//     id: 2,
-//     text: 'some second text',
-//     phone: 56643443,
-//   },
-//   {
-//     id: 3,
-//     text: 'some third text',
-//     phone: 90890,
-//   },
-// ];
 
 const StyledTable = styled.table`
   // & tr:last-child td:first-child {
@@ -70,18 +37,19 @@ const StyledTable = styled.table`
 `;
 
 type Props = {
-  onEditClick: OnEditClick;
   headers: TableHeaderColumns;
   deleteBtn: DeleteBtn;
+  editBtn: EditBtn;
   // eslint-disable-next-line react/require-default-props
   rows?: TableBodyRows;
 };
 
+// eslint-disable-next-line react/display-name
 export const Table: FC<Props> = ({
-  onEditClick,
-  deleteBtn,
   headers,
   rows = [],
+  deleteBtn,
+  editBtn,
 }) => {
   let content = <p>No data to display</p>;
 
@@ -93,7 +61,7 @@ export const Table: FC<Props> = ({
           headers={headers}
           rows={rows}
           deleteBtn={deleteBtn}
-          onEditClick={onEditClick}
+          editBtn={editBtn}
         />
       </StyledTable>
     );

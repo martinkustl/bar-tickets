@@ -24,7 +24,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "max-len": ["warn", { "code": 80 }],
+    "max-len": ["warn", { "code": 120 }],
     "import/extensions": ["off", "never"],
     "react/function-component-definition": [
       2,

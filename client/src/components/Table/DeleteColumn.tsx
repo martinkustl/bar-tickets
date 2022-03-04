@@ -1,5 +1,5 @@
 import { DeleteBtn, TableBodyRow } from '@/components/Table/types';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { ColumnBase } from '@/components/Table/ColumnBase';
 import { Trash } from '@styled-icons/bootstrap';
 import { Button } from '@/components/UI/Button';
@@ -15,34 +15,24 @@ const requestIdentifiers = {
   deleteItem: 'deleteItem',
 };
 
-export const DeleteColumn: FC<Props> = ({ item, deleteBtn }) => {
+// eslint-disable-next-line react/display-name
+export const DeleteColumn: FC<Props> = ({ deleteBtn, item }) => {
   const theme = useTheme();
-  const { data, error, isLoading, reqIdentifer, sendRequest } =
-    useSimpleHttp<TableBodyRow>();
+  const { sendRequest } = useSimpleHttp<TableBodyRow>();
 
-  useEffect(() => {
-    if (
-      reqIdentifer === requestIdentifiers.deleteItem &&
-      data &&
-      !error &&
-      !isLoading
-    ) {
-      deleteBtn.onDeleteResponse(data);
-    }
-  }, [data, error, isLoading, reqIdentifer, deleteBtn]);
-
-  const handleDeleteClick = async (item: TableBodyRow) => {
+  const handleDeleteClick = async () => {
     await sendRequest({
       url: `${deleteBtn.url}/${item.id}`,
       method: 'DELETE',
       body: null,
       reqIdentifer: requestIdentifiers.deleteItem,
+      mutateSwr: deleteBtn.mutateSwr,
     });
   };
 
   return (
     <ColumnBase>
-      <Button type="button" onClick={() => handleDeleteClick(item)}>
+      <Button type="button" onClick={handleDeleteClick}>
         <Trash width={20} height={20} color={theme.colors.danger.hex} />
       </Button>
     </ColumnBase>

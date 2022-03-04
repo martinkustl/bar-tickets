@@ -1,8 +1,13 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import useHttp from '@/hooks/http';
 import { Heading } from '@/components/AdminDetail/Heading';
 import { Table } from '@/components/Table/Table';
-import { TableBodyRow } from '@/components/Table/types';
+import {
+  OnCancelChanges,
+  OnUpdateRequest,
+  TableBodyRow,
+} from '@/components/Table/types';
+import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';
 
 type Category = {
   id: number;
@@ -28,25 +33,48 @@ const AdminDetail: FC = () => {
 
   // TODO - handle errors
 
-  const handleEditClick = (column: TableBodyRow) => {
-    console.log(column);
-  };
-
   const deleteBtn = {
     url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
-    onDeleteResponse: async (column: TableBodyRow) => {
+    mutateSwr: async (deletedRow: TableBodyRow) => {
       if (!data) return;
-      const filteredData = [...data].filter((item) => item.id !== column.id);
-      await mutate([...filteredData], false);
+      const filteredData = data.filter((item) => item.id !== deletedRow.id);
+      await mutate(filteredData, { revalidate: false });
     },
+  };
+
+  const editBtn = {
+    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
+    mutateSwr: async (updatedRow: TableBodyRow) => {
+      if (!data) return;
+      const updatedData = [...data].map((item) => {
+        if (item.id === updatedRow.id) return updatedRow;
+        return item;
+      });
+
+      await mutate([...(updatedData as Category[])], { revalidate: false });
+    },
+    renderForm: useCallback(
+      (
+        onUpdateRequest: OnUpdateRequest,
+        onCancelChanges: OnCancelChanges,
+        item: TableBodyRow
+      ) => (
+        <EditCategoryForm
+          onUpdateRequest={onUpdateRequest}
+          onCancelChanges={onCancelChanges}
+          item={item}
+        />
+      ),
+      []
+    ),
   };
 
   return (
     <div>
       <Heading heading="Administrace kategorií položek" />
       <Table
-        onEditClick={handleEditClick}
         deleteBtn={deleteBtn}
+        editBtn={editBtn}
         rows={data}
         headers={headers}
       />

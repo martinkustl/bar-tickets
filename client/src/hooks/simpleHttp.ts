@@ -57,12 +57,14 @@ const httpReducer = <T>(
   }
 };
 
-type SendRequestParams = {
+type SendRequestParams<T> = {
   url: string;
   method: 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   body: any;
   reqIdentifer: string;
+  // eslint-disable-next-line no-unused-vars
+  mutateSwr: (data: T) => Promise<void>;
 };
 
 const useSimpleHttp = <ResData>() => {
@@ -73,7 +75,13 @@ const useSimpleHttp = <ResData>() => {
   const clear = useCallback(() => dispatchHttp({ type: 'clear' }), []);
 
   const sendRequest = useCallback(
-    async ({ url, method, body, reqIdentifer }: SendRequestParams) => {
+    async ({
+      url,
+      method,
+      body,
+      reqIdentifer,
+      mutateSwr,
+    }: SendRequestParams<ResData>) => {
       dispatchHttp({ type: 'send', identifier: reqIdentifer });
 
       try {
@@ -90,7 +98,7 @@ const useSimpleHttp = <ResData>() => {
         if (!res.ok) {
           throw jsonRes;
         }
-
+        mutateSwr(jsonRes);
         dispatchHttp({ type: 'response', resData: jsonRes });
       } catch (err: unknown) {
         if (err instanceof HttpError) {

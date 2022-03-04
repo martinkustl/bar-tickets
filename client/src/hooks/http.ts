@@ -19,6 +19,7 @@ async function fetcher(url: string) {
 const swrConfiguration: SWRConfiguration = {
   fetcher,
   revalidateOnFocus: false,
+  revalidateIfStale: false,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
