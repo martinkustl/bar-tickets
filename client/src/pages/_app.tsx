@@ -4,6 +4,7 @@ import type { NextPage } from 'next';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import theme from '@/theme';
 import { AdminLayout } from '@/components/Layouts/Admin/Admin';
+import ErrorToast from '@/components/UI/Toasts/ErrorToast';
 
 const GlobalStyle = createGlobalStyle`
   html, body, #__next {
@@ -14,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'roboto';
+    font-family: 'roboto',serif;
   }
 `;
 
@@ -36,7 +37,10 @@ const CustomApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <GlobalStyle />
-      <ThemeProvider theme={theme}>{content}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        {content}
+        <ErrorToast />
+      </ThemeProvider>
     </>
   );
 };

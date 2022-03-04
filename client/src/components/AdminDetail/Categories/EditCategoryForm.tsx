@@ -6,6 +6,7 @@ import { Input } from '@/components/UI/FormInputs/Input';
 import { EditMutateSwr, TableBodyRow } from '@/types';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import { EditRecordForm } from '@/components/UI/Forms/EditRecordForm';
+import { useErrorToast } from '@/hooks/errorToast';
 
 const editCategorySchema = yup.object({
   name: yup.string().required('Jméno kategorie je vyžadováno!'),
@@ -43,7 +44,9 @@ const EditCategoryForm: FC<Props> = ({
     },
   });
 
-  const { sendRequest } = useSimpleHttp<TableBodyRow>();
+  const { sendRequest, error } = useSimpleHttp<TableBodyRow>();
+
+  useErrorToast(error);
 
   const onSubmit = handleSubmit(async (data) => {
     await sendRequest({

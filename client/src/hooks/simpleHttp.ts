@@ -1,5 +1,4 @@
 import { useReducer, useCallback, Reducer } from 'react';
-import { HttpError } from '@/errors/http-error';
 import { IHttpError } from '@/types';
 
 const initialState = {
@@ -100,14 +99,21 @@ const useSimpleHttp = <ResData>() => {
         }
         mutateSwr(jsonRes);
         dispatchHttp({ type: 'response', resData: jsonRes });
-      } catch (err: unknown) {
-        if (err instanceof HttpError) {
+      } catch (err: any) {
+        if (err && err.message && err.statusCode) {
           dispatchHttp({
             type: 'error',
             message: err.message,
             statusCode: err.statusCode,
           });
         }
+        // if (err instanceof HttpError) {
+        //   dispatchHttp({
+        //     type: 'error',
+        //     message: err.message,
+        //     statusCode: err.statusCode,
+        //   });
+        // }
       }
     },
     []

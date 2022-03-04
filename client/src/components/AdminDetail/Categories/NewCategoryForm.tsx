@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { FC } from 'react';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import { NewRecordForm } from '@/components/UI/Forms/NewRecordForm';
+import { useErrorToast } from '@/hooks/errorToast';
 
 const newCategorySchema = yup.object({
   name: yup.string().required('Jméno kategorie je vyžadováno!'),
@@ -38,7 +39,9 @@ const NewCategoryForm: FC<Props> = ({ url, mutateSwr }) => {
     resolver: yupResolver(newCategorySchema),
   });
 
-  const { sendRequest } = useSimpleHttp<NewCategory>();
+  const { sendRequest, error } = useSimpleHttp<NewCategory>();
+
+  useErrorToast(error);
 
   const onSubmit = handleSubmit(async (data) => {
     // onCreateRequest(data);

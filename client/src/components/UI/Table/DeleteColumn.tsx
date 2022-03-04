@@ -5,6 +5,7 @@ import { Trash } from '@styled-icons/bootstrap';
 import { Button } from '@/components/UI/Buttons/Button';
 import { useTheme } from 'styled-components';
 import useSimpleHttp from '@/hooks/simpleHttp';
+import { useErrorToast } from '@/hooks/errorToast';
 
 type Props = {
   item: TableBodyRow;
@@ -18,7 +19,9 @@ const requestIdentifiers = {
 // eslint-disable-next-line react/display-name
 export const DeleteColumn: FC<Props> = ({ deleteBtn, item }) => {
   const theme = useTheme();
-  const { sendRequest } = useSimpleHttp<TableBodyRow>();
+  const { sendRequest, error } = useSimpleHttp<TableBodyRow>();
+
+  useErrorToast(error);
 
   const handleDeleteClick = async () => {
     await sendRequest({

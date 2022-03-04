@@ -48,4 +48,5 @@ export type EditMutateSwr = (updatedRow: TableBodyRow) => Promise<void>;
 export type EditBtn = {
   url: string;
   // eslint-disable-next-line no-unused-vars
+  mutateSwr: (updatedRow: TableBodyRow) => Promise<void>;
 };
