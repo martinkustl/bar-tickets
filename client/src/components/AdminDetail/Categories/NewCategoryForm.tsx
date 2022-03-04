@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { FC } from 'react';
 import useSimpleHttp from '@/hooks/simpleHttp';
-import NewRecordForm from '@/components/UI/Forms/NewRecordForm';
+import { NewRecordForm } from '@/components/UI/Forms/NewRecordForm';
 
 const newCategorySchema = yup.object({
   name: yup.string().required('Jméno kategorie je vyžadováno!'),

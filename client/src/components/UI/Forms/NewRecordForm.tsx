@@ -38,7 +38,7 @@ type Props = {
   ) => Promise<void>;
 };
 
-const NewRecordForm: FC<Props> = ({
+export const NewRecordForm: FC<Props> = ({
   children,
   headingText,
   submitText,
@@ -53,5 +53,3 @@ const NewRecordForm: FC<Props> = ({
     </StyledNewCategoryForm>
   </StyledFormWrapper>
 );
-
-export default NewRecordForm;
