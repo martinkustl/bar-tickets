@@ -1,9 +1,8 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import useHttp from '@/hooks/http';
 import { Heading } from '@/components/AdminDetail/Heading';
 import { Table } from '@/components/UI/Table/Table';
-import { OnCancelChanges, OnUpdateRequest, TableBodyRow } from '@/types';
-import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';
+import { TableBodyRow } from '@/types';
 import NewCategoryForm from '@/components/AdminDetail/Categories/NewCategoryForm';
 
 type Category = {
@@ -50,20 +49,6 @@ const AdminDetail: FC = () => {
 
       await mutate([...(updatedData as Category[])], { revalidate: false });
     },
-    renderForm: useCallback(
-      (
-        onUpdateRequest: OnUpdateRequest,
-        onCancelChanges: OnCancelChanges,
-        item: TableBodyRow
-      ) => (
-        <EditCategoryForm
-          onUpdateRequest={onUpdateRequest}
-          onCancelChanges={onCancelChanges}
-          item={item}
-        />
-      ),
-      []
-    ),
   };
 
   return (

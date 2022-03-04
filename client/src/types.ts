@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { breakpoint } from '@/constants';
 
 export interface IHttpError extends Error {
@@ -41,9 +40,6 @@ export type DeleteBtn = {
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
 export type OnUpdateRequest = (data: any) => void;
 
-// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
-export type OnCreateRequest = (data: any) => void;
-
 export type OnCancelChanges = () => void;
 
 // eslint-disable-next-line no-unused-vars
@@ -52,13 +48,4 @@ export type EditMutateSwr = (updatedRow: TableBodyRow) => Promise<void>;
 export type EditBtn = {
   url: string;
   // eslint-disable-next-line no-unused-vars
-  mutateSwr: EditMutateSwr;
-  renderForm: (
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
-    onUpdateRequest: OnUpdateRequest,
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
-    onCancelChanges: OnCancelChanges,
-    // eslint-disable-next-line no-unused-vars
-    item: TableBodyRow
-  ) => ReactNode;
 };
