@@ -1,12 +1,9 @@
 import useSWR, { SWRResponse, Key, SWRConfiguration } from 'swr';
-import { useState, useEffect } from 'react';
 import { IHttpError } from '@/types';
-import { HttpError } from '../errors/http-error';
+import { HttpError } from '@/errors/http-error';
 
 async function fetcher(url: string) {
   const res = await fetch(url);
-
-  console.log(url);
 
   if (!res.ok) {
     throw new HttpError(res.status, res.statusText);
@@ -33,8 +30,6 @@ function useHttp<Data = any, Error = IHttpError>(
   // useEffect(() => {
   //   setUrl(initUrl);
   // }, [initUrl]);
-
-  console.log(initUrl);
 
   const { ...SWRProps } = useSWR<Data, Error>(initUrl, swrConfiguration);
 

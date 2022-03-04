@@ -16,3 +16,8 @@ export type OnDeleteClick = (item: TableBodyRow) => void;
 
 // eslint-disable-next-line no-unused-vars
 export type OnEditClick = (item: TableBodyRow) => void;
+
+export type DeleteBtn = {
+  url: string;
+  onDeleteResponse: OnDeleteClick;
+};

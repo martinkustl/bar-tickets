@@ -1,5 +1,5 @@
 import {
-  OnDeleteClick,
+  DeleteBtn,
   OnEditClick,
   TableBodyRows,
   TableHeaderColumns,
@@ -9,13 +9,6 @@ import { EditColumn } from '@/components/Table/EditColumn';
 import { DeleteColumn } from '@/components/Table/DeleteColumn';
 import { ColumnBase } from '@/components/Table/ColumnBase';
 import styled from 'styled-components';
-
-type Props = {
-  headers: TableHeaderColumns;
-  columns: TableBodyRows;
-  onDeleteClick: OnDeleteClick;
-  onEditClick: OnEditClick;
-};
 
 const StyledTBody = styled.tbody`
   & tr:nth-child(even) {
@@ -31,13 +24,15 @@ const StyledTBody = styled.tbody`
   }
 `;
 
-export const Body: FC<Props> = ({
-  headers,
-  columns,
-  onDeleteClick,
-  onEditClick,
-}) => {
-  const bodyContent = columns.map((item, index) => (
+type Props = {
+  headers: TableHeaderColumns;
+  rows: TableBodyRows;
+  deleteBtn: DeleteBtn;
+  onEditClick: OnEditClick;
+};
+
+export const Body: FC<Props> = ({ headers, rows, onEditClick, deleteBtn }) => {
+  const bodyContent = rows.map((item, index) => (
     <tr
       // eslint-disable-next-line react/no-array-index-key
       key={index}
@@ -53,13 +48,7 @@ export const Body: FC<Props> = ({
             );
           }
           if (key === 'delete') {
-            return (
-              <DeleteColumn
-                key={key}
-                item={item}
-                onDeleteClick={onDeleteClick}
-              />
-            );
+            return <DeleteColumn key={key} item={item} deleteBtn={deleteBtn} />;
           }
           return (
             <ColumnBase key={key}>{item[key as keyof typeof item]}</ColumnBase>

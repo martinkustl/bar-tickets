@@ -4,23 +4,52 @@ import { Heading } from '@/components/AdminDetail/Heading';
 import { Table } from '@/components/Table/Table';
 import { TableBodyRow } from '@/components/Table/types';
 
+type Category = {
+  id: number;
+  name: string;
+};
+
+const headers = {
+  name: {
+    name: 'Text',
+  },
+  edit: {
+    name: 'Editace',
+  },
+  delete: {
+    name: 'Mazání',
+  },
+};
+
 const AdminDetail: FC = () => {
-  const { data, error } = useHttp<{ id: number; name: string }[]>(
+  const { data, error, mutate } = useHttp<Category[]>(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`
   );
 
-  const handleDeleteClick = (column: TableBodyRow) => {
-    console.log(column);
-  };
+  // TODO - handle errors
 
   const handleEditClick = (column: TableBodyRow) => {
     console.log(column);
   };
 
+  const deleteBtn = {
+    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
+    onDeleteResponse: async (column: TableBodyRow) => {
+      if (!data) return;
+      const filteredData = [...data].filter((item) => item.id !== column.id);
+      await mutate([...filteredData], false);
+    },
+  };
+
   return (
     <div>
       <Heading heading="Administrace kategorií položek" />
-      <Table onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} />
+      <Table
+        onEditClick={handleEditClick}
+        deleteBtn={deleteBtn}
+        rows={data}
+        headers={headers}
+      />
     </div>
   );
 };

@@ -20,7 +20,8 @@
       "@/errors/*": ["errors/*"],
       "@/hooks/*": ["hooks/*"],
       "@/theme": ["theme.ts"],
-      "@/types": ["types.ts"]
+      "@/types": ["types.ts"],
+      "@/constants": ["constants.ts"]
     }
   },
   "include": ["next-env.d.ts", "./src/**/*.ts", "./src/**/*.tsx"],

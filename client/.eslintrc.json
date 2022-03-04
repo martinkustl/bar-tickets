@@ -45,6 +45,7 @@
     "comma-dangle": "off",
     "object-curly-newline": "off",
     "react/jsx-one-expression-per-line": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "react/require-default-props": "off"
   }
 }

@@ -88,12 +88,20 @@ class App {
   private enableCors() {
     this.app.register(fastifyCors, {
       origin: (origin, cb) => {
-        const hostname = new URL(origin).hostname;
-        if (hostname === 'localhost') {
-          //  Request from localhost will pass
-          cb(null, true);
-          return;
-        }
+        // console.log(origin);
+        // console.log('------------------ssss');
+        // const org = origin ?? undefined;
+        // const hostname = new URL(org)?.hostname;
+        // console.log(hostname);
+        // console.log('-------------');
+        // if (hostname === 'localhost' || !hostname) {
+        //   //  Request from localhost will pass
+        //   cb(null, true);
+        //   return;
+        // }
+        cb(null, true);
+        return;
+
         // Generate an error on other origins, disabling access
         cb(new HttpError(422, 'Not allowed'), false);
       },
