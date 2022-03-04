@@ -15,17 +15,8 @@ type Props = {
 export const EditColumn: FC<Props> = ({ item, editBtn }) => {
   const theme = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const { sendRequest } = useSimpleHttp<TableBodyRow>();
-  //
-  // const handleUpdateRequest = async (data: TableBodyRow) => {
-  //   await sendRequest({
-  //     url: `${editBtn.url}/${item.id}`,
-  //     method: 'PATCH',
-  //     body: data,
-  //     reqIdentifer: requestIdentifiers.updateItem,
-  //     mutateSwr: editBtn.mutateSwr,
-  //   });
-  // };
+
+  const handleModalChange = (newState: boolean) => setIsModalOpen(newState);
 
   return (
     <ColumnBase>
@@ -38,7 +29,7 @@ export const EditColumn: FC<Props> = ({ item, editBtn }) => {
             url={`${editBtn.url}/${item.id}`}
             mutateSwr={editBtn.mutateSwr}
             // onUpdateRequest={handleUpdateRequest}
-            onCancelChanges={() => setIsModalOpen(false)}
+            onModalChange={handleModalChange}
             item={item}
           />
         </Modal>

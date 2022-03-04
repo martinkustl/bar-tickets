@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Input } from '@/components/UI/FormInputs/Input';
-import { EditMutateSwr, OnCancelChanges, TableBodyRow } from '@/types';
+import { EditMutateSwr, TableBodyRow } from '@/types';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import { EditRecordForm } from '@/components/UI/Forms/EditRecordForm';
 
@@ -20,17 +20,17 @@ const requestIdentifiers = {
 type Props = {
   url: string;
   mutateSwr: EditMutateSwr;
-  // onUpdateRequest: OnUpdateRequest;
-  onCancelChanges: OnCancelChanges;
   item: TableBodyRow;
+  // eslint-disable-next-line no-unused-vars
+  onModalChange: (newState: boolean) => void;
 };
 
 const EditCategoryForm: FC<Props> = ({
   url,
   mutateSwr,
-  onCancelChanges,
   // onUpdateRequest,
   item,
+  onModalChange,
 }) => {
   const {
     register,
@@ -53,6 +53,7 @@ const EditCategoryForm: FC<Props> = ({
       reqIdentifer: requestIdentifiers.updateItem,
       mutateSwr,
     });
+    onModalChange(false);
   });
 
   return (
@@ -61,7 +62,7 @@ const EditCategoryForm: FC<Props> = ({
       submitText="Provést změny"
       cancelText="Zrušit změny"
       onSubmit={onSubmit}
-      onCancelChanges={onCancelChanges}
+      onCancelChanges={() => onModalChange(false)}
     >
       <Input
         placeholder="text"
