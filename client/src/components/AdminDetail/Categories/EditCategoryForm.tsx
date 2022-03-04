@@ -9,7 +9,7 @@ import {
   OnCancelChanges,
   OnUpdateRequest,
   TableBodyRow,
-} from '@/components/Table/types';
+} from '@/components/UI/Table/types';
 
 const StyledFormWrapper = styled.div`
   display: flex;

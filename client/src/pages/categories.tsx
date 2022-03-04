@@ -1,12 +1,12 @@
 import { FC, useCallback } from 'react';
 import useHttp from '@/hooks/http';
 import { Heading } from '@/components/AdminDetail/Heading';
-import { Table } from '@/components/Table/Table';
+import { Table } from '@/components/UI/Table/Table';
 import {
   OnCancelChanges,
   OnUpdateRequest,
   TableBodyRow,
-} from '@/components/Table/types';
+} from '@/components/UI/Table/types';
 import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';
 
 type Category = {

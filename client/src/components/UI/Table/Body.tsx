@@ -3,12 +3,12 @@ import {
   EditBtn,
   TableBodyRows,
   TableHeaderColumns,
-} from '@/components/Table/types';
+} from '@/components/UI/Table/types';
 import { FC } from 'react';
-import { DeleteColumn } from '@/components/Table/DeleteColumn';
-import { ColumnBase } from '@/components/Table/ColumnBase';
+import { DeleteColumn } from '@/components/UI/Table/DeleteColumn';
+import { ColumnBase } from '@/components/UI/Table/ColumnBase';
 import styled from 'styled-components';
-import { EditColumn } from '@/components/Table/EditColumn';
+import { EditColumn } from '@/components/UI/Table/EditColumn';
 
 const StyledTBody = styled.tbody`
   & tr:nth-child(even) {

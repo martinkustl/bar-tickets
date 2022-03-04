@@ -1,6 +1,6 @@
-import { EditBtn, TableBodyRow } from '@/components/Table/types';
+import { EditBtn, TableBodyRow } from '@/components/UI/Table/types';
 import { FC, useState } from 'react';
-import { ColumnBase } from '@/components/Table/ColumnBase';
+import { ColumnBase } from '@/components/UI/Table/ColumnBase';
 import { useTheme } from 'styled-components';
 import { Pencil } from '@styled-icons/bootstrap';
 import { Button } from '@/components/UI/Button';
