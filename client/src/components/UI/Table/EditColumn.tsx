@@ -5,7 +5,6 @@ import { useTheme } from 'styled-components';
 import { Pencil } from '@styled-icons/bootstrap';
 import { Button } from '@/components/UI/Buttons/Button';
 import { Modal } from '@/components/UI/Modal';
-import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';
 
 type Props = {
   item: TableBodyRow;
@@ -25,13 +24,12 @@ export const EditColumn: FC<Props> = ({ item, editBtn }) => {
       </Button>
       {isModalOpen && (
         <Modal>
-          <EditCategoryForm
-            url={`${editBtn.url}/${item.id}`}
-            mutateSwr={editBtn.mutateSwr}
-            // onUpdateRequest={handleUpdateRequest}
-            onModalChange={handleModalChange}
-            item={item}
-          />
+          {editBtn.renderEditForm(
+            item,
+            `${editBtn.url}/${item.id}`,
+            editBtn.mutateSwr,
+            handleModalChange
+          )}
         </Modal>
       )}
     </ColumnBase>

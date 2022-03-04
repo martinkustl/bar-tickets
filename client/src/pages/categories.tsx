@@ -2,8 +2,9 @@ import { FC } from 'react';
 import useHttp from '@/hooks/http';
 import { Heading } from '@/components/AdminDetail/Heading';
 import { Table } from '@/components/UI/Table/Table';
-import { TableBodyRow } from '@/types';
+import { EditBtn, TableBodyRow } from '@/types';
 import NewCategoryForm from '@/components/AdminDetail/Categories/NewCategoryForm';
+import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';
 
 type Category = {
   id: number;
@@ -38,9 +39,9 @@ const AdminDetail: FC = () => {
     },
   };
 
-  const editBtn = {
+  const editBtn: EditBtn = {
     url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
-    mutateSwr: async (updatedRow: TableBodyRow) => {
+    mutateSwr: async (updatedRow) => {
       if (!data) return;
       const updatedData = [...data].map((item) => {
         if (item.id === updatedRow.id) return updatedRow;
@@ -49,6 +50,15 @@ const AdminDetail: FC = () => {
 
       await mutate([...(updatedData as Category[])], { revalidate: false });
     },
+    renderEditForm: (item, url, mutateSwr, onModalChange) => (
+      <EditCategoryForm
+        url={url}
+        mutateSwr={mutateSwr}
+        // onUpdateRequest={handleUpdateRequest}
+        onModalChange={onModalChange}
+        item={item}
+      />
+    ),
   };
 
   return (
@@ -70,14 +80,5 @@ const AdminDetail: FC = () => {
     </div>
   );
 };
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const { id } = context.query;
-//   const res = await fetch(`http://localhost:3001/categories/${id}`);
-//   const category = await res.json();
-//   return {
-//     props: { category },
-//   };
-// };
 
 export default AdminDetail;
