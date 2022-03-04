@@ -8,6 +8,7 @@ import {
   TableBodyRow,
 } from '@/components/UI/Table/types';
 import EditCategoryForm from '@/components/AdminDetail/Categories/EditCategoryForm';
+import NewCategoryForm from '@/components/AdminDetail/Categories/NewCategoryForm';
 
 type Category = {
   id: number;
@@ -27,7 +28,7 @@ const headers = {
 };
 
 const AdminDetail: FC = () => {
-  const { data, error, mutate } = useHttp<Category[]>(
+  const { data, mutate } = useHttp<Category[]>(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`
   );
 
@@ -77,6 +78,13 @@ const AdminDetail: FC = () => {
         editBtn={editBtn}
         rows={data}
         headers={headers}
+      />
+      <NewCategoryForm
+        url={`${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`}
+        mutateSwr={async (newCategory) => {
+          if (!data) return;
+          await mutate([...data, newCategory], false);
+        }}
       />
     </div>
   );

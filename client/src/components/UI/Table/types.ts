@@ -22,6 +22,9 @@ export type DeleteBtn = {
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
 export type OnUpdateRequest = (data: any) => void;
 
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
+export type OnCreateRequest = (data: any) => void;
+
 export type OnCancelChanges = () => void;
 
 export type EditBtn = {
