@@ -8,16 +8,12 @@ const StyledItems = styled.ul`
 
 const items = [
   {
-    path: '/categories',
+    path: '/admin/categories',
     name: 'Kategorie položek',
   },
   {
-    path: '/items',
+    path: '/admin/items',
     name: 'Položky',
-  },
-  {
-    path: '/tickets',
-    name: 'Lístky',
   },
 ];
 

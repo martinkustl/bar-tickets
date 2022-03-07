@@ -1,20 +1,19 @@
 import { FC } from 'react';
-import { Heading } from '@/components/AdminDetail/Heading';
-import { Table } from '@/components/UI/Table/Table';
 import useHttp from '@/hooks/http';
+import { Heading } from '@/components/Admin/Heading';
+import { Table } from '@/components/UI/Table/Table';
 import { EditBtn, TableBodyRow } from '@/types';
-import { EditItemForm } from '@/components/AdminDetail/Items/EditItemForm';
-import { NewItemForm } from '@/components/AdminDetail/Items/NewItemForm';
+import { NewCategoryForm } from '@/components/Admin/Categories/NewCategoryForm';
+import { EditCategoryForm } from '@/components/Admin/Categories/EditCategoryForm';
+
+type Category = {
+  id: number;
+  name: string;
+};
 
 const headers = {
   name: {
-    name: 'Název',
-  },
-  size: {
-    name: 'Velikost',
-  },
-  price: {
-    name: 'Cena',
+    name: 'Text',
   },
   edit: {
     name: 'Editace',
@@ -24,20 +23,15 @@ const headers = {
   },
 };
 
-type Item = {
-  id: number;
-  name: string;
-  size: number;
-  price: number;
-};
-
-const Items: FC = () => {
-  const { data, mutate } = useHttp<Item[]>(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`
+const AdminDetail: FC = () => {
+  const { data, mutate } = useHttp<Category[]>(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`
   );
 
+  // TODO - handle errors
+
   const deleteBtn = {
-    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`,
+    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
     mutateSwr: async (deletedRow: TableBodyRow) => {
       if (!data) return;
       const filteredData = data.filter((item) => item.id !== deletedRow.id);
@@ -46,7 +40,7 @@ const Items: FC = () => {
   };
 
   const editBtn: EditBtn = {
-    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`,
+    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
     mutateSwr: async (updatedRow) => {
       if (!data) return;
       const updatedData = [...data].map((item) => {
@@ -54,10 +48,10 @@ const Items: FC = () => {
         return item;
       });
 
-      await mutate([...(updatedData as Item[])], { revalidate: false });
+      await mutate([...(updatedData as Category[])], { revalidate: false });
     },
     renderEditForm: (item, url, mutateSwr, onModalChange) => (
-      <EditItemForm
+      <EditCategoryForm
         url={url}
         mutateSwr={mutateSwr}
         // onUpdateRequest={handleUpdateRequest}
@@ -69,15 +63,15 @@ const Items: FC = () => {
 
   return (
     <div>
-      <Heading heading="Administrace položek" />
+      <Heading heading="Administrace kategorií položek" />
       <Table
         deleteBtn={deleteBtn}
         editBtn={editBtn}
         rows={data}
         headers={headers}
       />
-      <NewItemForm
-        url={`${process.env.NEXT_PUBLIC_BASE_API_URL}/items`}
+      <NewCategoryForm
+        url={`${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`}
         mutateSwr={async (newCategory) => {
           if (!data) return;
           await mutate([...data, newCategory], false);
@@ -87,4 +81,4 @@ const Items: FC = () => {
   );
 };
 
-export default Items;
+export default AdminDetail;
