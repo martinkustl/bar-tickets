@@ -17,6 +17,9 @@ const StyledNewCategoryForm = styled.form`
   margin-left: auto;
   margin-right: auto;
   min-width: 400px;
+  & > * {
+    margin-bottom: 0.8rem;
+  }
 `;
 
 const StyledHeading = styled.h3`

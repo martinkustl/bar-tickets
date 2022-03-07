@@ -11,6 +11,10 @@ const theme = {
       hex: '#3880ff',
       rgb: '56,128,255',
     },
+    dark: {
+      hex: '#000000',
+      rgb: '0,0,0',
+    },
   },
   radius: {
     normal: '5px',
