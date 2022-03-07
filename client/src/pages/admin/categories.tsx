@@ -62,7 +62,7 @@ const AdminDetail: FC = () => {
   };
 
   return (
-    <div>
+    <>
       <Heading heading="Administrace kategorií položek" />
       <Table
         deleteBtn={deleteBtn}
@@ -77,7 +77,7 @@ const AdminDetail: FC = () => {
           await mutate([...data, newCategory], false);
         }}
       />
-    </div>
+    </>
   );
 };
 

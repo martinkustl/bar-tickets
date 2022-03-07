@@ -68,7 +68,7 @@ const Items: FC = () => {
   };
 
   return (
-    <div>
+    <>
       <Heading heading="Administrace položek" />
       <Table
         deleteBtn={deleteBtn}
@@ -83,7 +83,7 @@ const Items: FC = () => {
           await mutate([...data, newCategory], false);
         }}
       />
-    </div>
+    </>
   );
 };
 
