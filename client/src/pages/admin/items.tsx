@@ -5,6 +5,7 @@ import useHttp from '@/hooks/http';
 import { EditBtn, TableBodyRow } from '@/types';
 import { EditItemForm } from '@/components/Admin/Items/EditItemForm';
 import { NewItemForm } from '@/components/Admin/Items/NewItemForm';
+import Head from 'next/head';
 
 const headers = {
   name: {
@@ -69,6 +70,9 @@ const Items: FC = () => {
 
   return (
     <>
+      <Head>
+        <title>Položky</title>
+      </Head>
       <Heading heading="Administrace položek" />
       <Table
         deleteBtn={deleteBtn}

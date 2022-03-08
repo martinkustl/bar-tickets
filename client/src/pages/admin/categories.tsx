@@ -5,6 +5,7 @@ import { Table } from '@/components/UI/Table/Table';
 import { EditBtn, TableBodyRow } from '@/types';
 import { NewCategoryForm } from '@/components/Admin/Categories/NewCategoryForm';
 import { EditCategoryForm } from '@/components/Admin/Categories/EditCategoryForm';
+import Head from 'next/head';
 
 type Category = {
   id: number;
@@ -63,6 +64,9 @@ const AdminDetail: FC = () => {
 
   return (
     <>
+      <Head>
+        <title>Kategorie položek</title>
+      </Head>
       <Heading heading="Administrace kategorií položek" />
       <Table
         deleteBtn={deleteBtn}

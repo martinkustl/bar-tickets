@@ -56,3 +56,10 @@ export type EditBtn = {
     onModalChange: (state: boolean) => void
   ) => ReactNode;
 };
+
+export type Ticket = {
+  id: number;
+  name: string;
+  isPaid: boolean;
+  createdAt: Date;
+};

@@ -1,3 +1,10 @@
 import { FC } from 'react';
+import styled from 'styled-components';
 
-export const TicketsLayout: FC = ({ children }) => <main>{children}</main>;
+const StyledTicketsLayout = styled.main`
+  padding: 1rem;
+`;
+
+export const TicketsLayout: FC = ({ children }) => (
+  <StyledTicketsLayout>{children}</StyledTicketsLayout>
+);

@@ -6,11 +6,11 @@ import { Routes } from './types';
 import * as yup from 'yup';
 
 const getAllTicketsSchema = {
-  params: yup.object().shape({ isPaid: yup.boolean() }),
+  querystring: yup.object().shape({ isPaid: yup.boolean() }),
 };
 
 type GetAllTickets = {
-  Querystring: yup.InferType<typeof getAllTicketsSchema.params>;
+  Querystring: yup.InferType<typeof getAllTicketsSchema.querystring>;
 };
 
 const getTicketSchema = {
@@ -46,19 +46,6 @@ type PatchTicket = {
   Body: yup.InferType<typeof patchTicketSchema.body>;
 };
 
-// jerseys: yup
-// .array()
-// .of(
-//   yup.object({
-//     number: yup.string().nullable(),
-//     name: yup.string().nullable(),
-//     size: yup.string().required(),
-//     type: yup.string().nullable(),
-//     price: yup.number().required(),
-//     colorId: yup.number().nullable(),
-//   })
-// )
-
 @injectable()
 class TicketRoutes extends Routes {
   private _ticketService: TicketService;
@@ -79,12 +66,17 @@ class TicketRoutes extends Routes {
   };
 
   protected getAll: FastifyPluginAsync = async (fastify) => {
-    fastify.get<GetAllTickets>('/', async (req, reply) => {
-      const tickets = await this._ticketService.selectAll(fastify, {
-        isPaid: req.query.isPaid,
-      });
-      return reply.code(200).send(tickets);
-    });
+    fastify.get<GetAllTickets>(
+      '/',
+      { schema: getAllTicketsSchema },
+      async (req, reply) => {
+        console.log(req.query);
+        const tickets = await this._ticketService.selectAll(fastify, {
+          isPaid: req.query.isPaid,
+        });
+        return reply.code(200).send(tickets);
+      }
+    );
   };
 
   protected getOne: FastifyPluginAsync = async (fastify) => {
