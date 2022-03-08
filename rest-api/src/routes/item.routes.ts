@@ -49,7 +49,7 @@ const deleteItemSchema = {
   }),
 };
 
-type DeleteItem = { Params: yup.InferType<typeof patchItemSchema.params> };
+type DeleteItem = { Params: yup.InferType<typeof deleteItemSchema.params> };
 
 @injectable()
 class ItemRoutes extends Routes {

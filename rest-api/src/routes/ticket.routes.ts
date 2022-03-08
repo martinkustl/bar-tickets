@@ -46,6 +46,14 @@ type PatchTicket = {
   Body: yup.InferType<typeof patchTicketSchema.body>;
 };
 
+const deleteTicketSchema = {
+  params: yup.object().shape({
+    id: yup.number().required(),
+  }),
+};
+
+type DeleteTicket = { Params: yup.InferType<typeof deleteTicketSchema.params> };
+
 @injectable()
 class TicketRoutes extends Routes {
   private _ticketService: TicketService;
@@ -116,7 +124,17 @@ class TicketRoutes extends Routes {
     );
   };
 
-  protected deleteOne: FastifyPluginAsync = async (fastify) => {};
+  protected deleteOne: FastifyPluginAsync = async (fastify) => {
+    fastify.delete<DeleteTicket>(
+      ':/id',
+      { schema: deleteTicketSchema },
+      async (req, reply) => {
+        const { id } = req.params;
+        const deletedTicket = await this._ticketService.delete(fastify, id);
+        return reply.code(200).send(deletedTicket);
+      }
+    );
+  };
 }
 
 export default TicketRoutes;
