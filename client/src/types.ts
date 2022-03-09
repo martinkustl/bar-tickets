@@ -27,8 +27,12 @@ export type TableHeaderColumns = { [key: string | number]: TableHeaderColumn };
 
 type KeyType = keyof TableHeaderColumns;
 
-// eslint-disable-next-line no-unused-vars
-export type TableBodyRow = { [key in KeyType]: string | number };
+export type AnyAppRecord = {
+  // eslint-disable-next-line no-unused-vars
+  [key in KeyType]: string | number;
+};
+
+export type TableBodyRow = AnyAppRecord;
 
 export type TableBodyRows = TableBodyRow[];
 
