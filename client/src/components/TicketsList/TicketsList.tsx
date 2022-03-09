@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button } from '@/components/UI/Buttons/Button';
 import { Modal } from '@/components/UI/Modal';
 import { NewTicketForm } from '@/components/NewTicketForm/NewTicketForm';
+import { addRecord } from '@/helpers/swr';
 
 const StyledHeading = styled.h1`
   text-align: center;
@@ -69,10 +70,7 @@ export const TicketsList = () => {
             onIsNewTicketModalOpenChange={(state) =>
               setIsNewTicketModalOpen(state)
             }
-            mutateSwr={async (newTicket) => {
-              if (!data) return;
-              await mutate([...data, newTicket], false);
-            }}
+            mutateSwr={addRecord(mutate, data)}
           />
         </StyledModal>
       )}

@@ -29,7 +29,7 @@ type KeyType = keyof TableHeaderColumns;
 
 export type AnyAppRecord = {
   // eslint-disable-next-line no-unused-vars
-  [key in KeyType]: string | number;
+  [key in KeyType]: string | number | boolean | Date;
 };
 
 export type TableBodyRow = AnyAppRecord;
