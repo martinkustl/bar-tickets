@@ -17,13 +17,10 @@ const StyledModalBackdrop = styled.div<StyledModalBackdropProps>`
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  top: 60px;
-  @media only screen and (min-width: ${`${breakpoint.tablet}px`}) {
-    top: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-  }
+  top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 type StyledModalProps = {
@@ -32,20 +29,12 @@ type StyledModalProps = {
 
 const StyledModal = styled.section<StyledModalProps>`
   background-color: white;
-  //height: calc(100% - 60px);
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-top-left-radius: var(--radius-bigger);
-  border-top-right-radius: var(--radius-bigger);
   box-shadow: 0 0 8px 7px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1000;
-  @media only screen and (min-width: ${`${breakpoint.tablet}px`}) {
-    height: auto;
-    width: auto;
-    border-radius: ${({ theme }) => theme.radius.normal};
-  }
+  height: auto;
+  width: auto;
+  border-radius: ${({ theme }) => theme.radius.normal};
 `;
 
 type Props = {
