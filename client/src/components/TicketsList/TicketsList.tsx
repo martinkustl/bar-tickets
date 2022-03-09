@@ -69,6 +69,10 @@ export const TicketsList = () => {
             onIsNewTicketModalOpenChange={(state) =>
               setIsNewTicketModalOpen(state)
             }
+            mutateSwr={async (newTicket) => {
+              if (!data) return;
+              await mutate([...data, newTicket], false);
+            }}
           />
         </StyledModal>
       )}
