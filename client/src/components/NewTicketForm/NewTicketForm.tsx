@@ -42,14 +42,6 @@ export const NewTicketForm: FC<Props> = ({
   const { sendRequest, error } = useSimpleHttp<NewTicket>();
 
   const onSubmit = handleSubmit(async (data) => {
-    // await sendRequest({
-    //   url,
-    //   method: 'PATCH',
-    //   body: data,
-    //   reqIdentifer: requestIdentifiers.updateItem,
-    //   mutateSwr,
-    // });
-
     await sendRequest({
       url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/tickets`,
       method: 'POST',
