@@ -5,8 +5,10 @@ import { Ticket } from '@/types';
 import styled from 'styled-components';
 import { Button } from '@/components/UI/Buttons/Button';
 import { Modal } from '@/components/UI/Modal';
-import { NewTicketForm } from '@/components/NewTicketForm/NewTicketForm';
-import { addRecord } from '@/helpers/swr';
+import { NewTicketForm } from '@/components/TicketsList/NewTicketForm';
+import { addRecord, deleteRecord, editRecord } from '@/helpers/swr';
+import { EditTicketButton } from '@/components/TicketsList/EditTicketButton';
+import { DeleteTicketButton } from '@/components/TicketsList/DeleteTicketButton';
 
 const StyledHeading = styled.h1`
   text-align: center;
@@ -26,7 +28,7 @@ const StyledTicketsList = styled.ul`
 
 const StyledNewTicket = styled(Button)`
   padding: 1rem;
-  width: 400px;
+  width: 200px;
   border-radius: ${({ theme }) => theme.radius.normal};
   background-color: ${({ theme }) => theme.colors.primary.hex};
   color: ${({ theme }) => theme.colors.light.hex};
@@ -43,27 +45,34 @@ export const TicketsList = () => {
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/tickets?isPaid=false`
   );
 
-  let ticketsList;
+  let listContent;
 
-  if (!data) {
-    ticketsList = <p>Žádné položky k zobrazení</p>;
+  if (!data || data.length === 0) {
+    listContent = <p>Žádné položky k zobrazení</p>;
   } else {
-    ticketsList = (
-      <StyledTicketsList>
-        <StyledNewTicket onClick={() => setIsNewTicketModalOpen(true)}>
-          Vytvořit nový lístek
-        </StyledNewTicket>
-        {data.map((ticket) => (
-          <TicketItem key={ticket.id} ticket={ticket} />
-        ))}
-      </StyledTicketsList>
-    );
+    listContent = data.map((ticket) => (
+      <TicketItem key={ticket.id} ticket={ticket}>
+        <EditTicketButton
+          ticket={ticket}
+          mutateSwr={editRecord(mutate, data)}
+        />
+        <DeleteTicketButton
+          ticket={ticket}
+          mutateSwr={deleteRecord(mutate, data)}
+        />
+      </TicketItem>
+    ));
   }
 
   return (
     <>
       <StyledHeading>Seznam lístků</StyledHeading>
-      {ticketsList}
+      <StyledTicketsList>
+        <StyledNewTicket onClick={() => setIsNewTicketModalOpen(true)}>
+          Vytvořit nový lístek
+        </StyledNewTicket>
+        {listContent}
+      </StyledTicketsList>
       {isNewTicketModalOpen && (
         <StyledModal>
           <NewTicketForm

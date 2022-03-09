@@ -36,10 +36,13 @@ export type TableBodyRow = AnyAppRecord;
 
 export type TableBodyRows = TableBodyRow[];
 
+// eslint-disable-next-line no-unused-vars
+export type DeleteMutateSwr = (deletedRow: TableBodyRow) => Promise<void>;
+
 export type DeleteBtn = {
   url: string;
   // eslint-disable-next-line no-unused-vars
-  mutateSwr: (deletedRow: TableBodyRow) => Promise<void>;
+  mutateSwr: DeleteMutateSwr;
 };
 
 // eslint-disable-next-line no-unused-vars
