@@ -36,7 +36,6 @@ const patchTicketSchema = {
   body: yup.object().shape({
     name: yup.string(),
     isPaid: yup.boolean(),
-    totalCost: yup.number(),
     orderedItems: yup.array().of(yup.number().required()),
   }),
 };
@@ -126,7 +125,7 @@ class TicketRoutes extends Routes {
 
   protected deleteOne: FastifyPluginAsync = async (fastify) => {
     fastify.delete<DeleteTicket>(
-      ':/id',
+      '/:id',
       { schema: deleteTicketSchema },
       async (req, reply) => {
         const { id } = req.params;

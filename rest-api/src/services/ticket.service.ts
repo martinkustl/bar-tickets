@@ -1,4 +1,4 @@
-import { HttpError } from '../common/errors/http-error';
+import { HttpError } from '../common/errors';
 import { injectable } from 'inversify';
 import { FastifyInstance } from 'fastify';
 
@@ -14,7 +14,6 @@ type UpdateTicket = {
   id: number;
   name?: string;
   isPaid?: boolean;
-  totalCost?: number;
   orderedItems?: number[];
 };
 
@@ -52,7 +51,7 @@ class TicketService {
   }
 
   public async update(fastify: FastifyInstance, ticket: UpdateTicket) {
-    const { id, isPaid, totalCost, orderedItems } = ticket;
+    const { id, isPaid, orderedItems, name } = ticket;
 
     await this.selectOne(fastify, id);
 
@@ -67,8 +66,8 @@ class TicketService {
         id,
       },
       data: {
+        name,
         isPaid,
-        totalCost,
         items,
       },
     });
