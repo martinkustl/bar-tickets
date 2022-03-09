@@ -2,10 +2,11 @@ import { FC } from 'react';
 import { Heading } from '@/components/Admin/Heading';
 import { Table } from '@/components/UI/Table/Table';
 import useHttp from '@/hooks/http';
-import { EditBtn, TableBodyRow } from '@/types';
+import { EditBtn } from '@/types';
 import { EditItemForm } from '@/components/Admin/Items/EditItemForm';
 import { NewItemForm } from '@/components/Admin/Items/NewItemForm';
 import Head from 'next/head';
+import { addRecord, editRecord, deleteRecord } from '@/helpers/swr';
 
 const headers = {
   name: {
@@ -39,24 +40,12 @@ const Items: FC = () => {
 
   const deleteBtn = {
     url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`,
-    mutateSwr: async (deletedRow: TableBodyRow) => {
-      if (!data) return;
-      const filteredData = data.filter((item) => item.id !== deletedRow.id);
-      await mutate(filteredData, { revalidate: false });
-    },
+    mutateSwr: deleteRecord(mutate, data),
   };
 
   const editBtn: EditBtn = {
     url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`,
-    mutateSwr: async (updatedRow) => {
-      if (!data) return;
-      const updatedData = [...data].map((item) => {
-        if (item.id === updatedRow.id) return updatedRow;
-        return item;
-      });
-
-      await mutate([...(updatedData as Item[])], { revalidate: false });
-    },
+    mutateSwr: editRecord(mutate, data),
     renderEditForm: (item, url, mutateSwr, onModalChange) => (
       <EditItemForm
         url={url}
@@ -82,10 +71,7 @@ const Items: FC = () => {
       />
       <NewItemForm
         url={`${process.env.NEXT_PUBLIC_BASE_API_URL}/items`}
-        mutateSwr={async (newCategory) => {
-          if (!data) return;
-          await mutate([...data, newCategory], false);
-        }}
+        mutateSwr={addRecord(mutate, data)}
       />
     </>
   );
