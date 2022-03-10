@@ -79,3 +79,7 @@ export type Item = {
   categoryId: number;
   // category: { id: number; name: string };
 };
+
+export type ItemWithCategory = Item & {
+  category: { id: number; name: string };
+};
