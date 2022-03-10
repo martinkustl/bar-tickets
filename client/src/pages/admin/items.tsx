@@ -2,11 +2,12 @@ import { FC } from 'react';
 import { Heading } from '@/components/Admin/Heading';
 import { Table } from '@/components/UI/Table/Table';
 import useHttp from '@/hooks/http';
-import { EditBtn } from '@/types';
+import { EditBtn, Item } from '@/types';
 import { EditItemForm } from '@/components/Admin/Items/EditItemForm';
 import { NewItemForm } from '@/components/Admin/Items/NewItemForm';
 import Head from 'next/head';
 import { addRecord, editRecord, deleteRecord } from '@/helpers/swr';
+import { baseApiUrl } from '@/constants';
 
 const headers = {
   name: {
@@ -26,25 +27,16 @@ const headers = {
   },
 };
 
-type Item = {
-  id: number;
-  name: string;
-  size: number;
-  price: number;
-};
-
 const Items: FC = () => {
-  const { data, mutate } = useHttp<Item[]>(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`
-  );
+  const { data, mutate } = useHttp<Item[]>(`${baseApiUrl}/items`);
 
   const deleteBtn = {
-    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`,
+    url: `${baseApiUrl}/items`,
     mutateSwr: deleteRecord(mutate, data),
   };
 
   const editBtn: EditBtn = {
-    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/items`,
+    url: `${baseApiUrl}/items`,
     mutateSwr: editRecord(mutate, data),
     renderEditForm: (item, url, mutateSwr, onModalChange) => (
       <EditItemForm
@@ -70,7 +62,7 @@ const Items: FC = () => {
         headers={headers}
       />
       <NewItemForm
-        url={`${process.env.NEXT_PUBLIC_BASE_API_URL}/items`}
+        url={`${baseApiUrl}/items`}
         mutateSwr={addRecord(mutate, data)}
       />
     </>

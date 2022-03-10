@@ -7,6 +7,7 @@ import { NewCategoryForm } from '@/components/Admin/Categories/NewCategoryForm';
 import { EditCategoryForm } from '@/components/Admin/Categories/EditCategoryForm';
 import Head from 'next/head';
 import { deleteRecord, editRecord, addRecord } from '@/helpers/swr';
+import { baseApiUrl } from '@/constants';
 
 type Category = {
   id: number;
@@ -26,19 +27,17 @@ const headers = {
 };
 
 const AdminDetail: FC = () => {
-  const { data, mutate } = useHttp<Category[]>(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`
-  );
+  const { data, mutate } = useHttp<Category[]>(`${baseApiUrl}/categories`);
 
   // TODO - handle errors
 
   const deleteBtn = {
-    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
+    url: `${baseApiUrl}/categories`,
     mutateSwr: deleteRecord(mutate, data),
   };
 
   const editBtn: EditBtn = {
-    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
+    url: `${baseApiUrl}/categories`,
     mutateSwr: editRecord(mutate, data),
     renderEditForm: (item, url, mutateSwr, onModalChange) => (
       <EditCategoryForm
@@ -64,7 +63,7 @@ const AdminDetail: FC = () => {
         headers={headers}
       />
       <NewCategoryForm
-        url={`${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`}
+        url={`${baseApiUrl}/categories`}
         mutateSwr={addRecord(mutate, data)}
       />
     </>

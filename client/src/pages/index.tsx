@@ -3,6 +3,12 @@ import { ReactElement } from 'react';
 import { TicketsLayout } from '@/components/Layouts/Tickets/Tickets';
 import Link from 'next/link';
 import { TicketsList } from '@/components/TicketsList/TicketsList';
+import styled from 'styled-components';
+
+const StyledAdminLink = styled.a`
+  padding: 1rem;
+  display: block;
+`;
 
 const Home = () => (
   <>
@@ -11,7 +17,7 @@ const Home = () => (
     </Head>
     <Link href="/admin/items" passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a>Přejít na administraci</a>
+      <StyledAdminLink>Přejít na administraci</StyledAdminLink>
     </Link>
     <TicketsList />
   </>

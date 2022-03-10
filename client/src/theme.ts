@@ -6,6 +6,7 @@ const theme = {
     primary: { hex: '#881c27', rgb: '136, 28, 39' },
     light: { hex: '#ffffff' },
     medium: { hex: '#5a5753', rgb: '90, 87, 83' },
+    lightMedium: { hex: '#bebbb7', rgb: '190,187,1' },
     danger: { hex: '#ff4f4f', rgb: '255,79,79' },
     success: { hex: '#0aa246', rgb: '10, 162, 70' },
     blue: {

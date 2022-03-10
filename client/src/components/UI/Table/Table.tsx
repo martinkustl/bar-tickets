@@ -46,7 +46,7 @@ export const Table: FC<Props> = ({
   deleteBtn,
   editBtn,
 }) => {
-  let content = <p>No data to display</p>;
+  let content = <p>Žádná data k zobrazení</p>;
 
   if (rows?.length >= 0) {
     content = (

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 const StyledTicketsLayout = styled.main`
-  padding: 1rem;
+  height: 100%;
 `;
 
 export const TicketsLayout: FC = ({ children }) => (

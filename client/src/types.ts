@@ -70,3 +70,12 @@ export type Ticket = {
   isPaid: boolean;
   createdAt: Date;
 };
+
+export type Item = {
+  id: number;
+  name: string;
+  size: number;
+  price: number;
+  categoryId: number;
+  // category: { id: number; name: string };
+};
