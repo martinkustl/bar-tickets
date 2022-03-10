@@ -5,6 +5,14 @@ import ItemService from '../services/item.service';
 import * as yup from 'yup';
 import { TYPES } from '../types/ioc-types';
 
+const getAllItemsSchema = {
+  querystring: yup.object().shape({ includeCategory: yup.boolean() }),
+};
+
+type GetAllItems = {
+  Querystring: yup.InferType<typeof getAllItemsSchema.querystring>;
+};
+
 const getItemSchema = {
   params: yup.object().shape({ id: yup.number().required() }),
 };
@@ -69,10 +77,19 @@ class ItemRoutes extends Routes {
   };
 
   protected getAll: FastifyPluginAsync = async (fastify) => {
-    fastify.get('/', async (_, reply) => {
-      const items = await this._itemService.selectAll(fastify);
-      return reply.code(200).send(items);
-    });
+    fastify.get<GetAllItems>(
+      '/',
+      {
+        schema: getAllItemsSchema,
+      },
+      async (req, reply) => {
+        const { includeCategory } = req.query;
+        const items = await this._itemService.selectAll(fastify, {
+          includeCategory,
+        });
+        return reply.code(200).send(items);
+      }
+    );
   };
 
   protected getOne: FastifyPluginAsync = async (fastify) => {

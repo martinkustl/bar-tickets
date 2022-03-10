@@ -1,5 +1,5 @@
 import CategoryService from './category.service';
-import { HttpError } from '../common/errors/http-error';
+import { HttpError } from '../common/errors';
 import { injectable, inject } from 'inversify';
 import { FastifyInstance } from 'fastify';
 import { TYPES } from '../types/ioc-types';
@@ -29,8 +29,21 @@ class ItemService {
     this._categoryService = categoryService;
   }
 
-  public async selectAll(fastify: FastifyInstance) {
-    return await fastify.prisma.item.findMany();
+  public async selectAll(
+    fastify: FastifyInstance,
+    { includeCategory = false }: { includeCategory?: boolean }
+  ) {
+    let query;
+
+    if (includeCategory) {
+      query = {
+        include: {
+          category: true,
+        },
+      };
+    }
+
+    return await fastify.prisma.item.findMany(query);
   }
 
   public async selectOne(fastify: FastifyInstance, id: number) {
