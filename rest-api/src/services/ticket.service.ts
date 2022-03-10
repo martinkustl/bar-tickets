@@ -14,7 +14,6 @@ type UpdateTicket = {
   id: number;
   name?: string;
   isPaid?: boolean;
-  orderedItems?: number[];
 };
 
 @injectable()
@@ -51,15 +50,9 @@ class TicketService {
   }
 
   public async update(fastify: FastifyInstance, ticket: UpdateTicket) {
-    const { id, isPaid, orderedItems, name } = ticket;
+    const { id, isPaid, name } = ticket;
 
     await this.selectOne(fastify, id);
-
-    const items: { connect?: { id: number }[] } = {};
-
-    if (orderedItems) {
-      items.connect = [...orderedItems.map((id) => ({ id }))];
-    }
 
     return await fastify.prisma.ticket.update({
       where: {
@@ -68,7 +61,6 @@ class TicketService {
       data: {
         name,
         isPaid,
-        items,
       },
     });
   }
@@ -83,6 +75,45 @@ class TicketService {
     return await fastify.prisma.ticket.delete({
       where: {
         id,
+      },
+    });
+  }
+
+  public async addItemToTicket(
+    fastify: FastifyInstance,
+    ticketId: number,
+    itemId: number
+  ) {
+    await fastify.prisma.ticketsOnItems.create({
+      data: { ticketId, itemId },
+    });
+
+    return await fastify.prisma.item.findUnique({
+      where: {
+        id: itemId,
+      },
+    });
+  }
+
+  public async deleteItemToTicket(
+    fastify: FastifyInstance,
+    ticketId: number,
+    itemId: number
+  ) {
+    const firstRecord = await fastify.prisma.ticketsOnItems.findFirst({
+      where: {
+        ticketId,
+        itemId,
+      },
+    });
+
+    if (!firstRecord) {
+      throw new HttpError(404, 'Item for given ticket not found!');
+    }
+
+    return await fastify.prisma.ticketsOnItems.delete({
+      where: {
+        id: firstRecord.id,
       },
     });
   }

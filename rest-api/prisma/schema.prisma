@@ -11,20 +11,28 @@ datasource db {
 }
 
 model Ticket {
-  id        Int      @id @default(autoincrement())
+  id        Int              @id @default(autoincrement())
   name      String
-  isPaid    Boolean @default(false)
-  createdAt DateTime @default(now())
-  items     Item[]
+  isPaid    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  items     TicketsOnItems[]
+}
+
+model TicketsOnItems {
+  id       Int    @id @default(autoincrement())
+  itemId   Int
+  ticketId Int
+  item     Item   @relation(fields: [itemId], references: [id])
+  ticket   Ticket @relation(fields: [ticketId], references: [id])
 }
 
 model Item {
-  id         Int      @id @default(autoincrement())
+  id         Int              @id @default(autoincrement())
   name       String
   size       Float
   price      Int
-  tickets    Ticket[]
-  category   Category @relation(fields: [categoryId], references: [id])
+  tickets    TicketsOnItems[]
+  category   Category         @relation(fields: [categoryId], references: [id])
   categoryId Int
 }
 
