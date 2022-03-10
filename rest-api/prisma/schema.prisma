@@ -24,7 +24,7 @@ model Item {
   size       Float
   price      Int
   tickets    Ticket[]
-  Category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 }
 
