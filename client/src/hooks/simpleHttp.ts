@@ -63,7 +63,7 @@ type SendRequestParams<T> = {
   body: any;
   reqIdentifer: string;
   // eslint-disable-next-line no-unused-vars
-  mutateSwr: (data: T) => Promise<void>;
+  mutateSwr?: (data: T) => Promise<void>;
 };
 
 const useSimpleHttp = <ResData>() => {
@@ -97,8 +97,13 @@ const useSimpleHttp = <ResData>() => {
         if (!res.ok) {
           throw jsonRes;
         }
-        mutateSwr(jsonRes);
+
+        if (mutateSwr) {
+          mutateSwr(jsonRes);
+        }
+
         dispatchHttp({ type: 'response', resData: jsonRes });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         if (err && err.message && err.statusCode) {
           dispatchHttp({
@@ -107,13 +112,6 @@ const useSimpleHttp = <ResData>() => {
             statusCode: err.statusCode,
           });
         }
-        // if (err instanceof HttpError) {
-        //   dispatchHttp({
-        //     type: 'error',
-        //     message: err.message,
-        //     statusCode: err.statusCode,
-        //   });
-        // }
       }
     },
     []

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button } from '@/components/UI/Buttons/Button';
 import { FC } from 'react';
-import { ItemWithCategory } from '@/types';
+import { ItemSum, ItemWithCategory } from '@/types';
 
 const StyledItemButton = styled(Button)`
   display: flex;
@@ -17,6 +17,9 @@ const StyledItemButton = styled(Button)`
 const StyledItemName = styled.div`
   flex: 1;
   min-height: inherit;
+  margin-right: auto;
+  justify-content: flex-start;
+  padding-left: 1rem;
 `;
 
 const StyledItemSize = styled.div`
@@ -31,18 +34,32 @@ const StyledItemPrice = styled.div`
   min-height: inherit;
 `;
 
+const StyledItemOrderedSum = styled.div`
+  width: 70px;
+  border-left: 1px solid black;
+  min-height: inherit;
+`;
+
 type Props = {
-  item: ItemWithCategory;
+  item: ItemWithCategory | ItemSum;
   // eslint-disable-next-line no-unused-vars
-  onItemClick: (item: ItemWithCategory) => void;
+  onItemClick: (item: ItemWithCategory | ItemSum) => void;
 };
 
-export const ItemButton: FC<Props> = ({ item, onItemClick }) => (
-  <li>
-    <StyledItemButton onClick={() => onItemClick(item)}>
-      <StyledItemName>{item.name}</StyledItemName>
-      <StyledItemSize>{item.size}</StyledItemSize>
-      <StyledItemPrice>{item.price} Kč</StyledItemPrice>
-    </StyledItemButton>
-  </li>
-);
+export const ItemButton: FC<Props> = ({ item, onItemClick }) => {
+  const isItemSum = (item: ItemWithCategory | ItemSum): item is ItemSum =>
+    'sum' in item;
+
+  return (
+    <li>
+      <StyledItemButton onClick={() => onItemClick(item)}>
+        <StyledItemName>{item.name}</StyledItemName>
+        <StyledItemSize>{item.size}</StyledItemSize>
+        {!isItemSum(item) && <StyledItemPrice>{item.price} Kč</StyledItemPrice>}
+        {isItemSum(item) && (
+          <StyledItemOrderedSum>{item.sum}x</StyledItemOrderedSum>
+        )}
+      </StyledItemButton>
+    </li>
+  );
+};

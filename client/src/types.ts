@@ -83,3 +83,11 @@ export type Item = {
 export type ItemWithCategory = Item & {
   category: { id: number; name: string };
 };
+
+export type ItemSum = {
+  id: number;
+  name: string;
+  price: number;
+  size: number;
+  sum: number;
+};

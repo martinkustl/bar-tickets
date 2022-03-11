@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import useHttp from '@/hooks/http';
 import { baseApiUrl } from '@/constants';
-import { ItemWithCategory } from '@/types';
+import { Item, ItemWithCategory } from '@/types';
 import { ItemButton } from '@/components/TicketDetail/ItemButton';
+import useSimpleHttp from '@/hooks/simpleHttp';
+import { FC } from 'react';
+import { useErrorToast } from '@/hooks/errorToast';
 
-const StyledRightSide = styled.div`
+const StyledRightSide = styled.section`
   flex: 1;
+  overflow-y: auto;
 `;
 
 const StyledBigList = styled.ul`
@@ -16,12 +20,9 @@ const StyledBigList = styled.ul`
 const StyledCategoryList = styled.ul`
   list-style: none;
   display: grid;
-  //grid-template-columns: 1fr 1fr;
   grid-template-columns: 1fr;
-  //grid-row-gap: 0.5rem;
   grid-template-rows: auto;
   border-top: 1px solid black;
-  //border-left: 1px solid black;
   & > li {
     border-bottom: 1px solid black;
     border-right: 1px solid black;
@@ -37,10 +38,38 @@ const StyledCategoryHeading = styled.h2`
   text-align: center;
 `;
 
-const ItemsList = () => {
+const requestIdentifiers = {
+  addItemToTicket: 'addItemToTicket',
+};
+
+type Props = {
+  ticketId: number;
+  // eslint-disable-next-line no-unused-vars
+  mutateTicketItemsList: (item: Item) => Promise<void>;
+};
+
+const ItemsList: FC<Props> = ({ ticketId, mutateTicketItemsList }) => {
+  const { sendRequest, error } = useSimpleHttp<Item>();
   const { data: items } = useHttp<ItemWithCategory[]>(
     `${baseApiUrl}/items?includeCategory=true`
   );
+
+  useErrorToast(error);
+
+  //  const { sendRequest, error } = useSimpleHttp<NewCategory>();
+  //
+  //   useErrorToast(error);
+  //
+  //   const onSubmit = handleSubmit(async (data) => {
+  //     // onCreateRequest(data);
+  //     await sendRequest({
+  //       url,
+  //       method: 'POST',
+  //       body: data,
+  //       reqIdentifer: requestIdentifiers.createCategory,
+  //       mutateSwr,
+  //     });
+  //   });
 
   if (!items) return <div>Načítám</div>;
 
@@ -64,8 +93,14 @@ const ItemsList = () => {
     (items: ItemWithCategory) => items.category.name
   );
 
-  const handleItemClick = (item: ItemWithCategory) => {
-    console.log(item);
+  const handleItemClick = async (item: ItemWithCategory) => {
+    await sendRequest({
+      url: `${baseApiUrl}/tickets/${ticketId}/${item.id}`,
+      method: 'POST',
+      body: item,
+      reqIdentifer: requestIdentifiers.addItemToTicket,
+      mutateSwr: mutateTicketItemsList,
+    });
   };
 
   const renderItems = () => (
