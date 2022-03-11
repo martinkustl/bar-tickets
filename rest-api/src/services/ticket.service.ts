@@ -16,6 +16,14 @@ type UpdateTicket = {
   isPaid?: boolean;
 };
 
+type SelectTicketItemsRawQuery = {
+  sum: number;
+  itemId: number;
+  name: string;
+  price: number;
+  size: number;
+};
+
 @injectable()
 class TicketService {
   public async selectAll(fastify: FastifyInstance, filter: FilterTickets) {
@@ -31,14 +39,18 @@ class TicketService {
       where: {
         id,
       },
-      include: {
-        items: true,
-      },
     });
 
+    const ticketItems = await fastify.prisma
+      .$queryRaw<SelectTicketItemsRawQuery>`SELECT COUNT(TicketsOnItems.id) AS 'sum', Item.id, Item.name, Item.price, Item.size FROM TicketsOnItems
+                              JOIN Item
+                              ON TicketsOnItems.itemId = Item.id
+                              WHERE ticketId = ${id}
+                              GROUP BY itemId;
+                `;
     if (!ticket) throw new HttpError(404, 'Ticket not found!');
 
-    return ticket;
+    return { ...ticket, items: ticketItems };
   }
 
   public async create(fastify: FastifyInstance, ticket: CreateTicket) {
@@ -72,6 +84,15 @@ class TicketService {
       throw new HttpError(400, 'Paid ticket cannot be deleted!');
     }
 
+    const isSomethingOrdered = await fastify.prisma.ticketsOnItems.findFirst({
+      where: {
+        ticketId: id,
+      },
+    });
+
+    if (isSomethingOrdered)
+      throw new HttpError(400, 'Tickets wit ordered items cannot be deleted!');
+
     return await fastify.prisma.ticket.delete({
       where: {
         id,
@@ -79,6 +100,19 @@ class TicketService {
     });
   }
 
+  public async deleteWithOrders(fastify: FastifyInstance, id: number) {
+    await fastify.prisma.ticketsOnItems.deleteMany({
+      where: {
+        ticketId: id,
+      },
+    });
+
+    return await fastify.prisma.ticket.delete({
+      where: {
+        id,
+      },
+    });
+  }
   public async addItemToTicket(
     fastify: FastifyInstance,
     ticketId: number,

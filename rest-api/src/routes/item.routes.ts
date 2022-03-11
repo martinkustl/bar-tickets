@@ -4,6 +4,7 @@ import { Routes } from './types';
 import ItemService from '../services/item.service';
 import * as yup from 'yup';
 import { TYPES } from '../types/ioc-types';
+import { HttpError } from '../common/errors';
 
 const getAllItemsSchema = {
   querystring: yup.object().shape({ includeCategory: yup.boolean() }),
@@ -140,6 +141,19 @@ class ItemRoutes extends Routes {
       { schema: deleteItemSchema },
       async (req, reply) => {
         const { id } = req.params;
+
+        const orderedItem = await fastify.prisma.ticketsOnItems.findFirst({
+          where: {
+            itemId: id,
+          },
+        });
+
+        if (orderedItem)
+          throw new HttpError(
+            400,
+            'Item is ordered in some Ticket, so it cannot be deleted!'
+          );
+
         const deletedItem = await this._itemService.delete(fastify, id);
         return reply.code(200).send(deletedItem);
       }

@@ -49,9 +49,15 @@ const deleteTicketSchema = {
   params: yup.object().shape({
     id: yup.number().required(),
   }),
+  querystring: yup.object().shape({
+    affectOrders: yup.boolean(),
+  }),
 };
 
-type DeleteTicket = { Params: yup.InferType<typeof deleteTicketSchema.params> };
+type DeleteTicket = {
+  Params: yup.InferType<typeof deleteTicketSchema.params>;
+  Querystring: yup.InferType<typeof deleteTicketSchema.querystring>;
+};
 
 const postItemToTicketSchema = {
   params: yup.object().shape({
@@ -153,8 +159,17 @@ class TicketRoutes extends Routes {
       { schema: deleteTicketSchema },
       async (req, reply) => {
         const { id } = req.params;
-        const deletedTicket = await this._ticketService.delete(fastify, id);
-        return reply.code(200).send(deletedTicket);
+        const { affectOrders } = req.query;
+        if (affectOrders) {
+          const deletedTicket = await this._ticketService.deleteWithOrders(
+            fastify,
+            id
+          );
+          return reply.code(200).send(deletedTicket);
+        } else {
+          const deletedTicket = await this._ticketService.delete(fastify, id);
+          return reply.code(200).send(deletedTicket);
+        }
       }
     );
   };
