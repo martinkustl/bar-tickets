@@ -5,14 +5,6 @@ import { TYPES } from '../types/ioc-types';
 import { Routes } from './types';
 import * as yup from 'yup';
 
-const getAllTicketsSchema = {
-  querystring: yup.object().shape({ isPaid: yup.boolean() }),
-};
-
-type GetAllTickets = {
-  Querystring: yup.InferType<typeof getAllTicketsSchema.querystring>;
-};
-
 const getTicketSchema = {
   params: yup.object().shape({ id: yup.number().required() }),
 };
@@ -35,8 +27,6 @@ const patchTicketSchema = {
   params: yup.object().shape({ id: yup.number().required() }),
   body: yup.object().shape({
     name: yup.string(),
-    isPaid: yup.boolean(),
-    // orderedItems: yup.array().of(yup.number().required()),
   }),
 };
 
@@ -103,16 +93,10 @@ class TicketRoutes extends Routes {
   };
 
   protected getAll: FastifyPluginAsync = async (fastify) => {
-    fastify.get<GetAllTickets>(
-      '/',
-      { schema: getAllTicketsSchema },
-      async (req, reply) => {
-        const tickets = await this._ticketService.selectAll(fastify, {
-          isPaid: req.query.isPaid,
-        });
-        return reply.code(200).send(tickets);
-      }
-    );
+    fastify.get('/', async (req, reply) => {
+      const tickets = await this._ticketService.selectAll(fastify);
+      return reply.code(200).send(tickets);
+    });
   };
 
   protected getOne: FastifyPluginAsync = async (fastify) => {

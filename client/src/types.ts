@@ -56,7 +56,6 @@ export type EditBtn = {
 export type Ticket = {
   id: number;
   name: string;
-  isPaid: boolean;
   createdAt: Date;
 };
 

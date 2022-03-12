@@ -2,10 +2,6 @@ import { HttpError } from '../common/errors';
 import { injectable } from 'inversify';
 import { FastifyInstance } from 'fastify';
 
-type FilterTickets = {
-  isPaid?: boolean;
-};
-
 type CreateTicket = {
   name: string;
 };
@@ -13,7 +9,6 @@ type CreateTicket = {
 type UpdateTicket = {
   id: number;
   name?: string;
-  isPaid?: boolean;
 };
 
 type SelectTicketItemsRawQuery = {
@@ -26,12 +21,8 @@ type SelectTicketItemsRawQuery = {
 
 @injectable()
 class TicketService {
-  public async selectAll(fastify: FastifyInstance, filter: FilterTickets) {
-    return await fastify.prisma.ticket.findMany({
-      where: {
-        ...filter,
-      },
-    });
+  public async selectAll(fastify: FastifyInstance) {
+    return await fastify.prisma.ticket.findMany();
   }
 
   public async selectOne(fastify: FastifyInstance, id: number) {
@@ -62,7 +53,7 @@ class TicketService {
   }
 
   public async update(fastify: FastifyInstance, ticket: UpdateTicket) {
-    const { id, isPaid, name } = ticket;
+    const { id, name } = ticket;
 
     await this.selectOne(fastify, id);
 
@@ -72,18 +63,11 @@ class TicketService {
       },
       data: {
         name,
-        isPaid,
       },
     });
   }
 
   public async delete(fastify: FastifyInstance, id: number) {
-    const toDelete = await this.selectOne(fastify, id);
-
-    if (toDelete.isPaid) {
-      throw new HttpError(400, 'Paid ticket cannot be deleted!');
-    }
-
     const isSomethingOrdered = await fastify.prisma.ticketsOnItems.findFirst({
       where: {
         ticketId: id,

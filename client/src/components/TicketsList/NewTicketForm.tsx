@@ -13,7 +13,6 @@ const newTicketSchema = yup.object({
 
 type NewTicket = {
   id: number;
-  isPaid: boolean;
   name: string;
   createdAt: Date;
 };

@@ -13,7 +13,6 @@ datasource db {
 model Ticket {
   id        Int              @id @default(autoincrement())
   name      String
-  isPaid    Boolean          @default(false)
   createdAt DateTime         @default(now())
   items     TicketsOnItems[]
 }

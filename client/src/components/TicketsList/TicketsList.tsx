@@ -42,7 +42,7 @@ export const TicketsList = () => {
   const [isNewTicketModalOpen, setIsNewTicketModalOpen] = useState(false);
 
   const { data, mutate } = useHttp<Ticket[]>(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/tickets?isPaid=false`
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/tickets`
   );
 
   let listContent;
