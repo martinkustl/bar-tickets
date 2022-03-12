@@ -4,7 +4,7 @@ import { baseApiUrl } from '@/constants';
 import { Item, ItemWithCategory } from '@/types';
 import { ItemButton } from '@/components/TicketDetail/ItemButton';
 import useSimpleHttp from '@/hooks/simpleHttp';
-import { FC, memo, useCallback } from 'react';
+import { FC } from 'react';
 import { useErrorToast } from '@/hooks/errorToast';
 
 const StyledRightSide = styled.section`
@@ -49,51 +49,48 @@ type Props = {
 };
 
 // eslint-disable-next-line react/display-name
-export const ItemsList: FC<Props> = memo(
-  ({ ticketId, mutateTicketItemsList }) => {
-    const { sendRequest, error } = useSimpleHttp<Item>();
-    const { data: items } = useHttp<ItemWithCategory[]>(
-      `${baseApiUrl}/items?includeCategory=true`
-    );
+export const ItemsList: FC<Props> = ({ ticketId, mutateTicketItemsList }) => {
+  const { sendRequest, error } = useSimpleHttp<Item>();
+  const { data: items } = useHttp<ItemWithCategory[]>(
+    `${baseApiUrl}/items?includeCategory=true`
+  );
 
-    useErrorToast(error);
+  useErrorToast(error);
 
-    const handleItemClick = useCallback(
-      async (item: ItemWithCategory) => {
-        await sendRequest({
-          url: `${baseApiUrl}/tickets/${ticketId}/${item.id}`,
-          method: 'POST',
-          body: item,
-          reqIdentifer: requestIdentifiers.addItemToTicket,
-          mutateSwr: mutateTicketItemsList,
-        });
-      },
-      [mutateTicketItemsList, sendRequest, ticketId]
-    );
+  const handleItemClick = async (item: ItemWithCategory) => {
+    await sendRequest({
+      url: `${baseApiUrl}/tickets/${ticketId}/${item.id}`,
+      method: 'POST',
+      body: item,
+      reqIdentifer: requestIdentifiers.addItemToTicket,
+      mutateSwr: mutateTicketItemsList,
+    });
+  };
 
-    if (!items) return <div>Načítám</div>;
+  if (!items) return <div>Načítám</div>;
 
-    function groupBy<T>(
-      array: Array<T>,
-      // eslint-disable-next-line no-unused-vars
-      property: (x: T) => string
-    ): { [key: string]: Array<T> } {
-      return array.reduce((memo: { [key: string]: Array<T> }, x: T) => {
-        if (!memo[property(x)]) {
-          // eslint-disable-next-line no-param-reassign
-          memo[property(x)] = [];
-        }
-        memo[property(x)].push(x);
-        return memo;
-      }, {});
-    }
+  function groupBy<T>(
+    array: Array<T>,
+    // eslint-disable-next-line no-unused-vars
+    property: (x: T) => string
+  ): { [key: string]: Array<T> } {
+    return array.reduce((memo: { [key: string]: Array<T> }, x: T) => {
+      if (!memo[property(x)]) {
+        // eslint-disable-next-line no-param-reassign
+        memo[property(x)] = [];
+      }
+      memo[property(x)].push(x);
+      return memo;
+    }, {});
+  }
 
-    const itemsByCategory = groupBy(
-      items,
-      (items: ItemWithCategory) => items.category.name
-    );
+  const itemsByCategory = groupBy(
+    items,
+    (items: ItemWithCategory) => items.category.name
+  );
 
-    const renderItems = () => (
+  return (
+    <StyledRightSide>
       <StyledBigList>
         {Object.entries(itemsByCategory).map(([key, value]) => (
           <li key={key}>
@@ -112,8 +109,6 @@ export const ItemsList: FC<Props> = memo(
           </li>
         ))}
       </StyledBigList>
-    );
-
-    return <StyledRightSide>{renderItems()}</StyledRightSide>;
-  }
-);
+    </StyledRightSide>
+  );
+};

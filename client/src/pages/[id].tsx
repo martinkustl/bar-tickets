@@ -1,4 +1,4 @@
-import { ReactElement, useCallback } from 'react';
+import { ReactElement } from 'react';
 import Link from 'next/link';
 import { TicketsLayout } from '@/components/Layouts/Tickets/Tickets';
 import useHttp from '@/hooks/http';
@@ -45,53 +45,44 @@ const TicketPage = () => {
     `${baseApiUrl}/tickets/${id}`
   );
 
-  const findExistingItem = useCallback(
-    (
-      items: ItemSum[],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      newItem: { id: number; [key: string]: any }
-    ) => items.find((existingItem) => existingItem.id === newItem.id),
-    []
-  );
+  const findExistingItem = (
+    items: ItemSum[],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    newItem: { id: number; [key: string]: any }
+  ) => items.find((existingItem) => existingItem.id === newItem.id);
 
-  const updateTicketItems = useCallback(
-    (items: ItemSum[], newItem: Item): ItemSum[] => {
-      if (findExistingItem(items, newItem)) {
-        return items.map((currItem) => {
-          if (currItem.id === newItem.id) {
-            return { ...currItem, sum: currItem.sum + 1 };
-          }
-          return currItem;
-        });
-      }
-      return [
-        ...items,
-        {
-          sum: 1,
-          id: newItem.id,
-          name: newItem.name,
-          price: newItem.price,
-          size: newItem.size,
-        },
-      ];
-    },
-    [findExistingItem]
-  );
+  const updateTicketItems = (items: ItemSum[], newItem: Item): ItemSum[] => {
+    if (findExistingItem(items, newItem)) {
+      return items.map((currItem) => {
+        if (currItem.id === newItem.id) {
+          return { ...currItem, sum: currItem.sum + 1 };
+        }
+        return currItem;
+      });
+    }
+    return [
+      ...items,
+      {
+        sum: 1,
+        id: newItem.id,
+        name: newItem.name,
+        price: newItem.price,
+        size: newItem.size,
+      },
+    ];
+  };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const handleMutateTicketItemsList = useCallback(
-    async (item: Item) => {
-      if (!data) return;
-      await mutate(
-        {
-          ...data,
-          items: [...updateTicketItems(data.items, item)],
-        },
-        { revalidate: false }
-      );
-    },
-    [data, mutate, updateTicketItems]
-  );
+  const handleMutateTicketItemsList = async (item: Item) => {
+    if (!data) return;
+    await mutate(
+      {
+        ...data,
+        items: [...updateTicketItems(data.items, item)],
+      },
+      { revalidate: false }
+    );
+  };
 
   if (!data) return <div>Načítám</div>;
 
