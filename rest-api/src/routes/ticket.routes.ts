@@ -107,7 +107,6 @@ class TicketRoutes extends Routes {
       '/',
       { schema: getAllTicketsSchema },
       async (req, reply) => {
-        console.log(req.query);
         const tickets = await this._ticketService.selectAll(fastify, {
           isPaid: req.query.isPaid,
         });
