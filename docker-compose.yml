@@ -1,0 +1,55 @@
+version: "3.3"
+
+services:
+  proxy:
+    restart: always
+    image: nginx
+    #    build:
+    #      context: ./proxy
+    ports:
+      - "3000:80"
+    #      - "6310:443"
+    volumes:
+      - ./proxy/config:/etc/nginx
+      - ./proxy/certs:/etc/ssl/private
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 500M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    env_file:
+      - client/.env.production
+  rest-api:
+    stdin_open: true
+    restart: always
+    build:
+      context: ./rest-api
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 500M
+    env_file:
+      - ./rest-api/.env
+  client:
+    restart: always
+    stdin_open: true
+    build:
+      context: ./client
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 500M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+networks:
+  default:
+    external:
+      name: mysqlnetwork
