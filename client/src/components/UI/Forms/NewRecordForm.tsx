@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, FC } from 'react';
-import { FormSubmitButton } from '@/components/UI/Buttons/FormSubmitButton';
+import { SubmitButton } from '@/components/UI/Buttons/SubmitButton';
 import styled from 'styled-components';
 
 const StyledFormWrapper = styled.section`
@@ -55,7 +55,7 @@ export const NewRecordForm: FC<Props> = ({
     <StyledNewRecordForm onSubmit={onSubmit}>
       <StyledHeading>{headingText}</StyledHeading>
       {children}
-      <FormSubmitButton>{submitText}</FormSubmitButton>
+      <SubmitButton>{submitText}</SubmitButton>
     </StyledNewRecordForm>
   </StyledFormWrapper>
 );

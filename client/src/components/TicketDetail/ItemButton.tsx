@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Button } from '@/components/UI/Buttons/Button';
 import { FC } from 'react';
 import { ItemSum, ItemWithCategory } from '@/types';
+import { isItemSum } from '@/helpers/typeGuards';
 
 const StyledItemButton = styled(Button)`
   display: flex;
@@ -47,20 +48,15 @@ type Props = {
 };
 
 // eslint-disable-next-line react/display-name
-export const ItemButton: FC<Props> = ({ item, onItemClick }) => {
-  const isItemSum = (item: ItemWithCategory | ItemSum): item is ItemSum =>
-    'sum' in item;
-
-  return (
-    <li>
-      <StyledItemButton onClick={() => onItemClick(item)}>
-        <StyledItemName>{item.name}</StyledItemName>
-        <StyledItemSize>{item.size}</StyledItemSize>
-        {!isItemSum(item) && <StyledItemPrice>{item.price} Kč</StyledItemPrice>}
-        {isItemSum(item) && (
-          <StyledItemOrderedSum>{item.sum}x</StyledItemOrderedSum>
-        )}
-      </StyledItemButton>
-    </li>
-  );
-};
+export const ItemButton: FC<Props> = ({ item, onItemClick }) => (
+  <li>
+    <StyledItemButton onClick={() => onItemClick(item)}>
+      <StyledItemName>{item.name}</StyledItemName>
+      <StyledItemSize>{item.size}</StyledItemSize>
+      {!isItemSum(item) && <StyledItemPrice>{item.price} Kč</StyledItemPrice>}
+      {isItemSum(item) && (
+        <StyledItemOrderedSum>{item.sum}x</StyledItemOrderedSum>
+      )}
+    </StyledItemButton>
+  </li>
+);

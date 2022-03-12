@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { FormSubmitButton } from '@/components/UI/Buttons/FormSubmitButton';
+import { SubmitButton } from '@/components/UI/Buttons/SubmitButton';
 import { BaseSyntheticEvent, FC } from 'react';
-import { CancelButton } from '@/components/UI/Buttons/FormCancelButton';
+import { CancelButton } from '@/components/UI/Buttons/CancelButton';
 
 const StyledFormWrapper = styled.div`
   display: flex;
@@ -60,7 +60,7 @@ export const EditRecordForm: FC<Props> = ({
         <CancelButton onCancelChanges={onCancelChanges}>
           {cancelText}
         </CancelButton>
-        <FormSubmitButton>{submitText}</FormSubmitButton>
+        <SubmitButton>{submitText}</SubmitButton>
       </StyledButtonsWrapper>
     </StyledForm>
   </StyledFormWrapper>

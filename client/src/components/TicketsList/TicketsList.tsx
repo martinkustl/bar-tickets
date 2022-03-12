@@ -48,7 +48,7 @@ export const TicketsList = () => {
   let listContent;
 
   if (!data || data.length === 0) {
-    listContent = <p>Žádné položky k zobrazení</p>;
+    listContent = <p>Žádné lístky k zobrazení</p>;
   } else {
     listContent = data.map((ticket) => (
       <TicketItem key={ticket.id} ticket={ticket}>

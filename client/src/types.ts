@@ -8,17 +8,6 @@ export interface IHttpError extends Error {
 
 export type Breakpoint = typeof breakpoint;
 
-//    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}/categories`,
-//     renderForm: (
-//       onUpdateRequest: (data: any) => void,
-//       onCancelChanges: () => void
-//     ) => (
-//       <EditCategoryForm
-//         onUpdateRequest={onUpdateRequest}
-//         onCancelChanges={onCancelChanges}
-//       />
-//     ),
-
 export type TableHeaderColumn = {
   name: string;
 };
@@ -91,3 +80,5 @@ export type ItemSum = {
   size: number;
   sum: number;
 };
+
+export type TicketDetailData = Ticket & { items: ItemSum[] };

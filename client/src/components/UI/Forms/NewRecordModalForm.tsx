@@ -1,7 +1,7 @@
 import { BaseSyntheticEvent, FC } from 'react';
-import { FormSubmitButton } from '@/components/UI/Buttons/FormSubmitButton';
+import { SubmitButton } from '@/components/UI/Buttons/SubmitButton';
 import styled from 'styled-components';
-import { CancelButton } from '@/components/UI/Buttons/FormCancelButton';
+import { CancelButton } from '@/components/UI/Buttons/CancelButton';
 
 const StyledFormWrapper = styled.section`
   display: flex;
@@ -57,7 +57,7 @@ export const NewRecordModalForm: FC<Props> = ({
         <CancelButton onCancelChanges={onCancelChanges}>
           {cancelText}
         </CancelButton>
-        <FormSubmitButton>{submitText}</FormSubmitButton>
+        <SubmitButton>{submitText}</SubmitButton>
       </StyledButtonsWrapper>
     </StyledNewRecordModalForm>
   </StyledFormWrapper>

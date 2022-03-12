@@ -1,10 +1,11 @@
 import { ItemButton } from '@/components/TicketDetail/ItemButton';
-import { ItemSum, ItemWithCategory, Ticket } from '@/types';
+import { ItemSum, TicketDetailData } from '@/types';
 import styled from 'styled-components';
 import { baseApiUrl } from '@/constants';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import { FC } from 'react';
 import { useErrorToast } from '@/hooks/errorToast';
+import { isItemSum } from '@/helpers/typeGuards';
 
 const StyledList = styled.ul`
   list-style: none;
@@ -12,6 +13,36 @@ const StyledList = styled.ul`
   & > li {
     border-bottom: 1px solid black;
   }
+`;
+
+const StyledListLegend = styled.li`
+  display: flex;
+  min-height: 50px;
+  background-color: ${({ theme }) => `rgba(${theme.colors.medium.rgb}, 0.2)`};
+  & > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+`;
+
+const StyledName = styled.div`
+  flex: 1;
+  justify-content: flex-start;
+  padding-left: 1rem;
+`;
+
+const StyledAmount = styled.div`
+  width: 70px;
+  text-align: center;
+  border-left: 1px solid ${({ theme }) => theme.colors.dark.hex};
+`;
+
+const StyledSize = styled.div`
+  width: 70px;
+  text-align: center;
+  border-left: 1px solid ${({ theme }) => theme.colors.dark.hex};
 `;
 
 type DeletedItem = { id: number; itemId: number; ticketId: number };
@@ -22,7 +53,7 @@ const requestIdentifiers = {
 
 type Props = {
   id: number;
-  data: Ticket & { items: ItemSum[] };
+  data: TicketDetailData;
   // eslint-disable-next-line no-unused-vars
   mutateSwr: (deletedItem: DeletedItem) => Promise<void>;
 };
@@ -36,9 +67,6 @@ export const OrderedItemsList: FC<Props> = ({ id, data, mutateSwr }) => {
 
   useErrorToast(error);
 
-  const isItemSum = (item: ItemWithCategory | ItemSum): item is ItemSum =>
-    'sum' in item;
-
   const handleItemClick = async (item: ItemSum) => {
     await sendRequest({
       url: `${baseApiUrl}/tickets/${id}/${item.id}`,
@@ -51,6 +79,11 @@ export const OrderedItemsList: FC<Props> = ({ id, data, mutateSwr }) => {
 
   return (
     <StyledList>
+      <StyledListLegend>
+        <StyledName>Název položky</StyledName>
+        <StyledSize>Velikost</StyledSize>
+        <StyledAmount>Počet</StyledAmount>
+      </StyledListLegend>
       {data.items.map((item) => (
         <ItemButton
           key={item.id}
