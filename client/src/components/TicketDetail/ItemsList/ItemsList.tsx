@@ -4,7 +4,7 @@ import { baseApiUrl } from '@/constants';
 import { Item, ItemWithCategory } from '@/types';
 import { ItemButton } from '@/components/TicketDetail/ItemButton';
 import useSimpleHttp from '@/hooks/simpleHttp';
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { useErrorToast } from '@/hooks/errorToast';
 
 const StyledRightSide = styled.section`
@@ -48,83 +48,72 @@ type Props = {
   mutateTicketItemsList: (item: Item) => Promise<void>;
 };
 
-const ItemsList: FC<Props> = ({ ticketId, mutateTicketItemsList }) => {
-  const { sendRequest, error } = useSimpleHttp<Item>();
-  const { data: items } = useHttp<ItemWithCategory[]>(
-    `${baseApiUrl}/items?includeCategory=true`
-  );
+// eslint-disable-next-line react/display-name
+export const ItemsList: FC<Props> = memo(
+  ({ ticketId, mutateTicketItemsList }) => {
+    const { sendRequest, error } = useSimpleHttp<Item>();
+    const { data: items } = useHttp<ItemWithCategory[]>(
+      `${baseApiUrl}/items?includeCategory=true`
+    );
 
-  useErrorToast(error);
+    useErrorToast(error);
 
-  //  const { sendRequest, error } = useSimpleHttp<NewCategory>();
-  //
-  //   useErrorToast(error);
-  //
-  //   const onSubmit = handleSubmit(async (data) => {
-  //     // onCreateRequest(data);
-  //     await sendRequest({
-  //       url,
-  //       method: 'POST',
-  //       body: data,
-  //       reqIdentifer: requestIdentifiers.createCategory,
-  //       mutateSwr,
-  //     });
-  //   });
+    const handleItemClick = useCallback(
+      async (item: ItemWithCategory) => {
+        await sendRequest({
+          url: `${baseApiUrl}/tickets/${ticketId}/${item.id}`,
+          method: 'POST',
+          body: item,
+          reqIdentifer: requestIdentifiers.addItemToTicket,
+          mutateSwr: mutateTicketItemsList,
+        });
+      },
+      [mutateTicketItemsList, sendRequest, ticketId]
+    );
 
-  if (!items) return <div>Načítám</div>;
+    if (!items) return <div>Načítám</div>;
 
-  function groupBy<T>(
-    array: Array<T>,
-    // eslint-disable-next-line no-unused-vars
-    property: (x: T) => string
-  ): { [key: string]: Array<T> } {
-    return array.reduce((memo: { [key: string]: Array<T> }, x: T) => {
-      if (!memo[property(x)]) {
-        // eslint-disable-next-line no-param-reassign
-        memo[property(x)] = [];
-      }
-      memo[property(x)].push(x);
-      return memo;
-    }, {});
+    function groupBy<T>(
+      array: Array<T>,
+      // eslint-disable-next-line no-unused-vars
+      property: (x: T) => string
+    ): { [key: string]: Array<T> } {
+      return array.reduce((memo: { [key: string]: Array<T> }, x: T) => {
+        if (!memo[property(x)]) {
+          // eslint-disable-next-line no-param-reassign
+          memo[property(x)] = [];
+        }
+        memo[property(x)].push(x);
+        return memo;
+      }, {});
+    }
+
+    const itemsByCategory = groupBy(
+      items,
+      (items: ItemWithCategory) => items.category.name
+    );
+
+    const renderItems = () => (
+      <StyledBigList>
+        {Object.entries(itemsByCategory).map(([key, value]) => (
+          <li key={key}>
+            <StyledCategoryList>
+              <li>
+                <StyledCategoryHeading>{key}</StyledCategoryHeading>
+              </li>
+              {value.map((item) => (
+                <ItemButton
+                  key={item.id}
+                  item={item}
+                  onItemClick={() => handleItemClick(item)}
+                />
+              ))}
+            </StyledCategoryList>
+          </li>
+        ))}
+      </StyledBigList>
+    );
+
+    return <StyledRightSide>{renderItems()}</StyledRightSide>;
   }
-
-  const itemsByCategory = groupBy(
-    items,
-    (items: ItemWithCategory) => items.category.name
-  );
-
-  const handleItemClick = async (item: ItemWithCategory) => {
-    await sendRequest({
-      url: `${baseApiUrl}/tickets/${ticketId}/${item.id}`,
-      method: 'POST',
-      body: item,
-      reqIdentifer: requestIdentifiers.addItemToTicket,
-      mutateSwr: mutateTicketItemsList,
-    });
-  };
-
-  const renderItems = () => (
-    <StyledBigList>
-      {Object.entries(itemsByCategory).map(([key, value]) => (
-        <li key={key}>
-          <StyledCategoryList>
-            <li>
-              <StyledCategoryHeading>{key}</StyledCategoryHeading>
-            </li>
-            {value.map((item) => (
-              <ItemButton
-                key={item.id}
-                item={item}
-                onItemClick={() => handleItemClick(item)}
-              />
-            ))}
-          </StyledCategoryList>
-        </li>
-      ))}
-    </StyledBigList>
-  );
-
-  return <StyledRightSide>{renderItems()}</StyledRightSide>;
-};
-
-export default ItemsList;
+);
