@@ -1,14 +1,11 @@
-version: "3.3"
+version: '3.3'
 
 services:
   proxy:
     restart: always
     image: nginx
-    #    build:
-    #      context: ./proxy
     ports:
-      - "3000:80"
-    #      - "6310:443"
+      - '3000:80'
     volumes:
       - ./proxy/config:/etc/nginx
       - ./proxy/certs:/etc/ssl/private
@@ -18,9 +15,9 @@ services:
           cpus: 1
           memory: 500M
     logging:
-      driver: "json-file"
+      driver: 'json-file'
       options:
-        max-size: "50m"
+        max-size: '50m'
     env_file:
       - client/.env.production
   rest-api:
@@ -46,9 +43,9 @@ services:
           cpus: 1
           memory: 500M
     logging:
-      driver: "json-file"
+      driver: 'json-file'
       options:
-        max-size: "50m"
+        max-size: '50m'
 networks:
   default:
     external:
