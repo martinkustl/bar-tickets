@@ -150,7 +150,7 @@ class ItemRoutes extends Routes {
 
         if (orderedItem)
           throw new HttpError(
-            400,
+            422,
             'Item is ordered in some Ticket, so it cannot be deleted!'
           );
 

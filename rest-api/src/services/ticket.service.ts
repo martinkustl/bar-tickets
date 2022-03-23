@@ -75,7 +75,7 @@ class TicketService {
     });
 
     if (isSomethingOrdered)
-      throw new HttpError(400, 'Tickets wit ordered items cannot be deleted!');
+      throw new HttpError(422, 'Tickets with ordered items cannot be deleted!');
 
     return await fastify.prisma.ticket.delete({
       where: {

@@ -57,7 +57,7 @@ class CategoryService {
 
     if (noOfCategores._count.id > 0)
       throw new HttpError(
-        400,
+        422,
         'Category with connected items cannot be deleted!'
       );
 
