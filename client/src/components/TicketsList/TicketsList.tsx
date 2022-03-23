@@ -9,6 +9,7 @@ import { NewTicketForm } from '@/components/TicketsList/NewTicketForm';
 import { addRecord, deleteRecord, editRecord } from '@/helpers/swr';
 import { EditTicketButton } from '@/components/TicketsList/EditTicketButton';
 import { DeleteTicketButton } from '@/components/TicketsList/DeleteTicketButton';
+import { baseApiUrl } from '@/constants';
 
 const StyledHeading = styled.h1`
   text-align: center;
@@ -41,9 +42,7 @@ const StyledModal = styled(Modal)`
 export const TicketsList = () => {
   const [isNewTicketModalOpen, setIsNewTicketModalOpen] = useState(false);
 
-  const { data, mutate } = useHttp<Ticket[]>(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/tickets`
-  );
+  const { data, mutate } = useHttp<Ticket[]>(`${baseApiUrl}/tickets`);
 
   let listContent;
 
