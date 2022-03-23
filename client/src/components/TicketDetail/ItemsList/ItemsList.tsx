@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import { FC } from 'react';
 import useHttp from '@/hooks/http';
 import { baseApiUrl } from '@/constants';
 import { Item, ItemWithCategory } from '@/types';
 import { ItemButton } from '@/components/TicketDetail/ItemButton';
 import useSimpleHttp from '@/hooks/simpleHttp';
-import { FC } from 'react';
 import { useErrorToast } from '@/hooks/errorToast';
 
 const StyledRightSide = styled.section`

@@ -1,11 +1,11 @@
 import { FC } from 'react';
+import Head from 'next/head';
 import useHttp from '@/hooks/http';
 import { Heading } from '@/components/Admin/Heading';
 import { Table } from '@/components/UI/Table/Table';
 import { EditBtn } from '@/types';
 import { NewCategoryForm } from '@/components/Admin/Categories/NewCategoryForm';
 import { EditCategoryForm } from '@/components/Admin/Categories/EditCategoryForm';
-import Head from 'next/head';
 import { deleteRecord, editRecord, addRecord } from '@/helpers/swr';
 import { baseApiUrl } from '@/constants';
 

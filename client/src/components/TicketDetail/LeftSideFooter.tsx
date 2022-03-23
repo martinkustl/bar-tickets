@@ -1,11 +1,11 @@
+import { FC, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { Button } from '@/components/UI/Buttons/Button';
 import { ItemSum, Ticket, TicketDetailData } from '@/types';
 import { baseApiUrl } from '@/constants';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import { useErrorToast } from '@/hooks/errorToast';
-import { FC, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { Modal } from '@/components/UI/Modal';
 import { CancelButton } from '@/components/UI/Buttons/CancelButton';
 import { SubmitButton } from '@/components/UI/Buttons/SubmitButton';

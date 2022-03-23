@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import { ReactElement } from 'react';
-import { TicketsLayout } from '@/components/Layouts/Tickets/Tickets';
 import Link from 'next/link';
-import { TicketsList } from '@/components/TicketsList/TicketsList';
 import styled from 'styled-components';
+import { TicketsLayout } from '@/components/Layouts/Tickets/Tickets';
+import { TicketsList } from '@/components/TicketsList/TicketsList';
 
 const StyledAdminLink = styled.a`
   padding: 1rem;

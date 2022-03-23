@@ -1,9 +1,9 @@
+import { FC } from 'react';
+import styled from 'styled-components';
 import { ItemButton } from '@/components/TicketDetail/ItemButton';
 import { ItemSum, TicketDetailData } from '@/types';
-import styled from 'styled-components';
 import { baseApiUrl } from '@/constants';
 import useSimpleHttp from '@/hooks/simpleHttp';
-import { FC } from 'react';
 import { useErrorToast } from '@/hooks/errorToast';
 import { isItemSum } from '@/helpers/typeGuards';
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import useHttp from '@/hooks/http';
 import { TicketItem } from '@/components/TicketsList/TicketItem';
 import { Ticket } from '@/types';
-import styled from 'styled-components';
 import { Button } from '@/components/UI/Buttons/Button';
 import { Modal } from '@/components/UI/Modal';
 import { NewTicketForm } from '@/components/TicketsList/NewTicketForm';

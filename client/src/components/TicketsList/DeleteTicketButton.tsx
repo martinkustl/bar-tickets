@@ -1,8 +1,8 @@
+import { FC } from 'react';
 import styled from 'styled-components';
 import { Trash } from '@styled-icons/bootstrap';
 import { Button } from '@/components/UI/Buttons/Button';
 import { DeleteMutateSwr, Ticket } from '@/types';
-import { FC } from 'react';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import { useErrorToast } from '@/hooks/errorToast';
 

@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import { TicketsLayout } from '@/components/Layouts/Tickets/Tickets';
 import useHttp from '@/hooks/http';
 import { baseApiUrl } from '@/constants';
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
 import { ItemSum, Ticket, Item } from '@/types';
 import { ItemsList } from '@/components/TicketDetail/ItemsList/ItemsList';
 import { OrderedItemsList } from '@/components/TicketDetail/OrderedItemsList/OrderedItemsList';

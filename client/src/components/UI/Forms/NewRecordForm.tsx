@@ -1,6 +1,6 @@
 import { BaseSyntheticEvent, FC } from 'react';
-import { SubmitButton } from '@/components/UI/Buttons/SubmitButton';
 import styled from 'styled-components';
+import { SubmitButton } from '@/components/UI/Buttons/SubmitButton';
 
 const StyledFormWrapper = styled.section`
   //margin-top: 3rem;

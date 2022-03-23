@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button } from '@/components/UI/Buttons/Button';
 import { FC } from 'react';
+import { Button } from '@/components/UI/Buttons/Button';
 
 const StyledCancelButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.medium.hex};

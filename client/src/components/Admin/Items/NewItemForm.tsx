@@ -1,14 +1,14 @@
-import { Input } from '@/components/UI/FormInputs/Input';
+import Select, { StylesConfig } from 'react-select';
+import { useTheme } from 'styled-components';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { FC } from 'react';
+import { Input } from '@/components/UI/FormInputs/Input';
 import useSimpleHttp from '@/hooks/simpleHttp';
 import { NewRecordForm } from '@/components/UI/Forms/NewRecordForm';
 import { useErrorToast } from '@/hooks/errorToast';
 import useHttp from '@/hooks/http';
-import Select, { StylesConfig } from 'react-select';
-import { useTheme } from 'styled-components';
 
 const editItemSchema = yup.object({
   name: yup.string().required('Název položky je vyžadován!'),

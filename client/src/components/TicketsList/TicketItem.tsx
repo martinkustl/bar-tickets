@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { Ticket } from '@/types';
 import styled from 'styled-components';
 import { ArrowIosForwardOutline } from '@styled-icons/evaicons-outline';
+import { Ticket } from '@/types';
 
 const StyledTicketItem = styled.li`
   display: flex;

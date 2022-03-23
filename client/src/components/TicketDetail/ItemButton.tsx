@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/UI/Buttons/Button';
-import { FC } from 'react';
 import { ItemSum, ItemWithCategory } from '@/types';
 import { isItemSum } from '@/helpers/typeGuards';
 
