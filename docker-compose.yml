@@ -32,6 +32,8 @@ services:
           memory: 500M
     env_file:
       - ./rest-api/.env
+    environment:
+      DATABASE_URL: 'mysql://root:root@mysql:3306/tickets'
   client:
     restart: always
     stdin_open: true

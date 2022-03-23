@@ -38,7 +38,7 @@
 /client/*.tsbuildinfo
 
 
-
+/proxy/.DS_Store
 
 /rest-api/node_modules
 # Keep environment variables out of version control
